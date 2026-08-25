@@ -384,14 +384,23 @@ export default function AnnouncementForm() {
                 </button>
 
                 {isEditing && (
-                  <Link
-                    to={`/haberler/${originalData?.slug}`}
-                    target="_blank"
-                    className="btn btn-ghost w-full"
-                    style={{ justifyContent: 'center' }}
-                  >
-                    🌐 Sayfada Gör
-                  </Link>
+                  <div className="flex gap-2">
+                    <Link
+                      to={`/haberler/${originalData?.slug}`}
+                      target="_blank"
+                      className="btn btn-ghost"
+                      style={{ flex: 1, justifyContent: 'center' }}
+                    >
+                      🌐 Sayfada Gör
+                    </Link>
+                    <Link
+                      to="/admin/panel/haberler/yeni"
+                      className="btn btn-primary"
+                      style={{ flex: 1, justifyContent: 'center', backgroundColor: '#10b981', borderColor: '#10b981', color: '#fff' }}
+                    >
+                      + Yeni Duyuru
+                    </Link>
+                  </div>
                 )}
               </div>
             </div>

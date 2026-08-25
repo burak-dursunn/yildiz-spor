@@ -106,7 +106,7 @@ create policy "Public read announcement images"
 -- Authenticated kullanıcılar yükleyebilir
 create policy "Admin upload announcement images"
   on storage.objects for insert
-  using (bucket_id = 'announcement-images' and auth.role() = 'authenticated');
+  with check (bucket_id = 'announcement-images' and auth.role() = 'authenticated');
 
 -- Authenticated kullanıcılar silebilir
 create policy "Admin delete announcement images"
