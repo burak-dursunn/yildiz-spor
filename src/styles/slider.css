@@ -1,0 +1,431 @@
+/* =============================================
+   Hero Slider — 16:9 Otomatik Geçiş
+   ============================================= */
+
+.hero-slider {
+  position: relative;
+  width: 100%;
+  /* Daha geniş sinematik oran */
+  aspect-ratio: 21 / 8;
+  max-height: 650px;
+  min-height: 420px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: none;
+  border: none;
+}
+
+/* Slides */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(10, 22, 11, 0.72) 0%,
+    rgba(10, 22, 11, 0.45) 55%,
+    rgba(10, 22, 11, 0.15) 100%
+  );
+}
+
+/* Content */
+.hero-slider-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  z-index: 5;
+}
+
+.hero-slider-inner {
+  max-width: 620px;
+  padding-left: 0.5rem;
+  border-left: 5px solid var(--accent);
+  padding-left: 2rem;
+}
+
+.hero-slider-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: var(--accent);
+  color: var(--text-primary);
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.3rem 0.875rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.hero-slider-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 0.875rem;
+}
+
+.hero-slider-subtitle {
+  font-size: clamp(0.875rem, 1.5vw, 1.0625rem);
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 480px;
+}
+
+.hero-slider-actions {
+  display: flex;
+  gap: 0.875rem;
+  flex-wrap: wrap;
+}
+
+.btn-outline-light {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0.75rem 1.75rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+}
+
+/* Animation */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.65s ease both;
+}
+
+/* Navigation Arrows */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.slider-arrow:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.slider-arrow-prev { left: 1rem; }
+.slider-arrow-next { right: 1rem; }
+
+/* Progress Bar */
+.slider-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  z-index: 10;
+}
+
+.slider-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  animation: progressFill linear forwards;
+  width: 0%;
+}
+
+@keyframes progressFill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* Dots */
+.slider-dots {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  padding: 0;
+}
+
+.slider-dot.active {
+  background: var(--accent);
+  width: 28px;
+}
+
+/* Counter */
+.slider-counter {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  z-index: 10;
+  font-family: 'Oswald', sans-serif;
+}
+
+.slider-counter-current {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.slider-counter-sep {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.9rem;
+}
+
+.slider-counter-total {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-slider {
+    aspect-ratio: 16 / 9;
+    max-height: 55vw;
+  }
+
+  .hero-slider-inner {
+    padding-left: 1.25rem;
+    border-left-width: 3px;
+  }
+
+  .slider-arrow {
+    width: 38px;
+    height: 44px;
+    font-size: 1.5rem;
+  }
+
+  .slider-arrow-prev { left: 0.5rem; }
+  .slider-arrow-next { right: 0.5rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-slider { aspect-ratio: 3 / 2; }
+  .hero-slider-actions { flex-direction: column; }
+  .hero-slider-actions .btn { text-align: center; justify-content: center; }
+}
+
+/* =============================================
+   Gallery Slider — Otomatik, Durmuyor
+   ============================================= */
+
+.gallery-slider {
+  width: 100%;
+  user-select: none;
+}
+
+/* Ana görsel alanı */
+.gallery-slider-main {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #111;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.gallery-slider-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.gallery-slider-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gallery-slider-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #111;
+  display: block;
+}
+
+/* Progress Bar */
+.gslider-progress-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  z-index: 5;
+}
+
+.gslider-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  animation: gProgressFill linear forwards;
+}
+
+@keyframes gProgressFill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* Arrows */
+.gslider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 42px;
+  height: 50px;
+  background: rgba(0,0,0,0.45);
+  border: none;
+  color: #fff;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.gslider-arrow:hover { background: var(--primary); }
+.gslider-prev { left: 0; }
+.gslider-next { right: 0; }
+
+/* Counter */
+.gslider-counter {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 10;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  background: rgba(0,0,0,0.5);
+  padding: 0.2rem 0.5rem;
+  letter-spacing: 1px;
+}
+
+/* Caption */
+.gslider-caption {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  background: rgba(0,0,0,0.6);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.8125rem;
+  padding: 0.4rem 0.875rem;
+  text-align: center;
+}
+
+/* Thumbnail Bar */
+.gslider-thumbs {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-dark) transparent;
+}
+
+.gslider-thumb {
+  flex-shrink: 0;
+  width: 72px;
+  height: 54px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  background: #111;
+  transition: border-color 0.2s;
+}
+
+.gslider-thumb:hover { border-color: var(--text-muted); }
+
+.gslider-thumb.active {
+  border-color: var(--primary);
+}
+
+.gslider-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .gallery-slider-main { aspect-ratio: 4 / 3; }
+  .gslider-thumb { width: 56px; height: 42px; }
+}

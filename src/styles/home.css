@@ -1,0 +1,868 @@
+/* ================================================================
+   HOME PAGE — PREMIUM SPORTS EDITORIAL CSS
+   Ergani Yıldız Spor | Modern Athletic & Academy Design
+   ================================================================ */
+
+/* ─── Scroll Reveal Base ─────────────────────────────── */
+.home-section,
+.home-split-section,
+.home-stats-bar,
+.home-join-cta {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.home-section.in-view,
+.home-split-section.in-view,
+.home-stats-bar.in-view,
+.home-join-cta.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-section,
+  .home-split-section,
+  .home-stats-bar,
+  .home-join-cta {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ─── Hero Wrap — Tam Genişlik ───────────────────────── */
+.home-hero-wrap {
+  background: #0a0a0a;
+  padding-bottom: 0;
+  /* Slider tam genişlik: container yok */
+}
+
+.home-hero-wrap .hero-slider {
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  /* Tam ekran genişliğinde */
+  max-height: 600px;
+}
+
+/* ─── Section Eyebrow ────────────────────────────────── */
+.section-eyebrow {
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  border-left: 3px solid var(--primary);
+  padding-left: 0.625rem;
+  margin-bottom: 0.75rem;
+}
+
+.section-eyebrow.light {
+  color: rgba(255,255,255,0.7);
+  border-color: var(--accent);
+}
+
+/* ─── Section Titles ─────────────────────────────────── */
+.home-section-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.home-section-title.light {
+  color: #fff;
+}
+
+.home-section-sub {
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 560px;
+  line-height: 1.65;
+}
+
+.home-section-sub.light {
+  color: rgba(255,255,255,0.65);
+}
+
+.home-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.home-section-header.centered {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.home-section-header.centered .section-eyebrow {
+  border-left: none;
+  border-bottom: 2px solid var(--primary);
+  padding-left: 0;
+  padding-bottom: 0.25rem;
+}
+
+.home-section-header.light.centered .section-eyebrow {
+  border-color: var(--accent);
+}
+
+/* ─── Generic Padding ─────────────────────────────────── */
+.home-section {
+  padding: 5rem 0;
+}
+
+.home-news-section {
+  background: var(--bg-surface);
+  padding: 4rem 0 5rem;
+}
+
+.bg-surface-section {
+  background: var(--bg-surface);
+}
+
+.bg-dark-section {
+  background: #0a0a0a;
+}
+
+/* ─── News Featured Grid — Eşit boyutlu 3 sütun ──────── */
+.news-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: stretch; /* her kart eşit yükseklik */
+}
+
+/* Tüm kartlar aynı boyutta */
+.news-featured-grid > * {
+  display: flex;
+  flex-direction: column;
+}
+
+.news-featured-grid .news-card {
+  height: 100%;
+}
+
+/* ─── ABOUT / ACADEMY SPLIT SECTION ─────────────────── */
+.home-split-section {
+  padding: 6rem 0;
+  background: #fff;
+}
+
+.home-split-alt {
+  background: var(--bg-surface);
+}
+
+.home-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.home-split-grid.reverse {
+  direction: rtl;
+}
+
+.home-split-grid.reverse > * {
+  direction: ltr;
+}
+
+.home-split-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.home-split-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.text-accent-blue {
+  color: var(--primary);
+}
+
+.home-split-desc {
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+/* Mini Stats Row */
+.home-split-stats {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-surface);
+  border-left: 4px solid var(--primary);
+}
+
+.mini-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mini-stat-val {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.mini-stat-label {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+.mini-stat-divider {
+  width: 1px;
+  height: 2.5rem;
+  background: var(--border);
+}
+
+.home-split-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Feature List */
+.home-feature-list {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.home-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+
+.home-feature-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Visual side */
+.home-split-visual {
+  position: relative;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+
+.home-split-visual.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.home-split-img-main {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 8px 8px 0 var(--primary);
+}
+
+.home-split-img-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.home-split-img-main:hover img {
+  transform: scale(1.03);
+}
+
+/* Logo badge overlay */
+.home-split-img-badge {
+  position: absolute;
+  bottom: -1.25rem;
+  left: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+.home-split-img-badge img {
+  height: 32px;
+  width: auto;
+}
+
+/* Academy overlay card */
+.home-academy-overlay-card {
+  position: absolute;
+  top: 1rem;
+  right: -1rem;
+  background: var(--primary);
+  color: #fff;
+  padding: 0.625rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.04em;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+}
+
+/* ─── STATS BAR ──────────────────────────────────────── */
+.home-stats-bar {
+  background: var(--primary);
+  padding: 3rem 0;
+}
+
+.home-stats-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.home-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+.home-stats-bar.in-view .home-stat-item {
+  animation-play-state: running;
+}
+
+.home-stat-val {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.home-stat-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.375rem;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── AGE CATEGORIES ─────────────────────────────────── */
+.age-cats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  overflow: hidden;
+}
+
+.age-cat-card {
+  background: #111;
+  padding: 2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background 0.25s;
+  cursor: default;
+}
+
+.age-cat-card:hover {
+  background: var(--primary);
+}
+
+.age-cat-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  transition: color 0.25s;
+}
+
+.age-cat-card:hover .age-cat-label {
+  color: #fff;
+}
+
+.age-cat-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.age-cat-age {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.06em;
+}
+
+.age-cat-desc {
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.55;
+  margin-top: 0.25rem;
+  transition: color 0.25s;
+}
+
+.age-cat-card:hover .age-cat-desc {
+  color: rgba(255,255,255,0.85);
+}
+
+/* ─── VALUES SECTION ─────────────────────────────────── */
+.home-values-section {
+  background: var(--bg-surface);
+}
+
+/* Değerlerimiz metin bloğu */
+.values-text-block {
+  max-width: 860px;
+  margin: 0 auto 4rem;
+  background: #fff;
+  border-left: 5px solid var(--primary);
+  padding: 2.5rem 3rem;
+  box-shadow: 0 2px 16px rgba(13,71,161,0.06);
+}
+
+.values-main-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.values-main-para {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.values-main-quote {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.7;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* ─── VALUES GRID ────────────────────────────────────── */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.value-card {
+  padding: 2.25rem 2rem;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--primary);
+  background: #fff;
+  transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
+}
+
+.value-card:hover {
+  box-shadow: 0 8px 32px rgba(13,71,161,0.12);
+  transform: translateY(-5px);
+}
+
+.value-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(13,71,161,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+}
+
+.value-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.value-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ─── COACHES GRID ───────────────────────────────────── */
+.coaches-grid {
+  display: flex;
+  justify-content: center;
+}
+
+.coach-card {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 3rem;
+  max-width: 800px;
+  width: 100%;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: #fff;
+}
+
+.coach-img-wrap {
+  overflow: hidden;
+  height: 360px;
+}
+
+.coach-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.5s;
+}
+
+.coach-card:hover .coach-img-wrap img {
+  transform: scale(1.04);
+}
+
+.coach-info {
+  padding: 2rem 2rem 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.coach-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.coach-role {
+  display: inline-block;
+  margin-top: 0.375rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.coach-bio {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.coach-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.coach-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(13,71,161,0.08);
+  color: var(--primary);
+  padding: 0.3rem 0.75rem;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(13,71,161,0.15);
+}
+
+/* ─── TRUST GRID ─────────────────────────────────────── */
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.trust-card {
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--border);
+  background: #fff;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.trust-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 20px rgba(13,71,161,0.08);
+}
+
+.trust-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.trust-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.trust-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ─── JOIN CTA ───────────────────────────────────────── */
+.home-join-cta {
+  background: #0a0a0a;
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-join-cta::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--primary);
+}
+
+.home-join-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.home-join-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-top: 0.5rem;
+}
+
+.home-join-sub {
+  margin-top: 1rem;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  max-width: 480px;
+}
+
+.home-join-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* White button */
+.btn-white {
+  background: #fff;
+  color: #0a0a0a;
+  border: 2px solid #fff;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-white:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.btn-outline-white {
+  background: transparent;
+  color: rgba(255,255,255,0.85);
+  border: 2px solid rgba(255,255,255,0.3);
+  font-weight: 600;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-outline-white:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .age-cats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .values-grid,
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-split-stats {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .news-featured-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .news-featured-grid > *:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .news-featured-grid > *:first-child .news-card-image {
+    aspect-ratio: 21/9;
+  }
+
+  .values-text-block {
+    padding: 2rem 2rem;
+  }
+
+  .news-featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .home-split-grid,
+  .home-split-grid.reverse {
+    grid-template-columns: 1fr;
+    direction: ltr;
+    gap: 2.5rem;
+  }
+
+  .home-split-grid.reverse > * {
+    direction: ltr;
+  }
+
+  .home-split-img-main {
+    box-shadow: 4px 4px 0 var(--primary);
+  }
+
+  .age-cats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-stats-row {
+    gap: 1.5rem;
+  }
+
+  .home-stat-val {
+    font-size: 2rem;
+  }
+
+  .home-join-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home-join-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .news-featured-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .values-text-block {
+    padding: 1.5rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-section {
+    padding: 3.5rem 0;
+  }
+
+  .home-split-section {
+    padding: 3.5rem 0;
+  }
+
+  .age-cats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .values-grid,
+  .trust-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-split-stats {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mini-stat-divider {
+    width: 100%;
+    height: 1px;
+  }
+}
