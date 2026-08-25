@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
 import { AuthProvider } from './hooks/useAuth'
 import { recordVisit } from './lib/api'
 import Header from './components/Header'
@@ -52,113 +53,116 @@ export default function App() {
   }, [])
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminLogin />} />
-          <Route
-            path="/admin/panel"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/panel/haberler"
-            element={
-              <ProtectedRoute>
-                <AnnouncementList />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/panel/haberler/yeni"
-            element={
-              <ProtectedRoute>
-                <AnnouncementForm />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/panel/haberler/:id"
-            element={
-              <ProtectedRoute>
-                <AnnouncementForm />
-              </ProtectedRoute>
-            }
-          />
+    <HelmetProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route
+              path="/admin/panel"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/panel/haberler"
+              element={
+                <ProtectedRoute>
+                  <AnnouncementList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/panel/haberler/yeni"
+              element={
+                <ProtectedRoute>
+                  <AnnouncementForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/panel/haberler/:id"
+              element={
+                <ProtectedRoute>
+                  <AnnouncementForm />
+                </ProtectedRoute>
+              }
+            />
 
-          {/* League Admin Routes */}
-          <Route
-            path="/admin/panel/lig"
-            element={
-              <ProtectedRoute>
-                <LeaguePanel />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/panel/lig/mac-gir"
-            element={
-              <ProtectedRoute>
-                <LeagueMatchForm />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/panel/lig/mac-gir/:id"
-            element={
-              <ProtectedRoute>
-                <LeagueMatchForm />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/panel/lig/takimlar"
-            element={
-              <ProtectedRoute>
-                <LeagueTeams />
-              </ProtectedRoute>
-            }
-          />
+            {/* League Admin Routes */}
+            <Route
+              path="/admin/panel/lig"
+              element={
+                <ProtectedRoute>
+                  <LeaguePanel />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/panel/lig/mac-gir"
+              element={
+                <ProtectedRoute>
+                  <LeagueMatchForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/panel/lig/mac-gir/:id"
+              element={
+                <ProtectedRoute>
+                  <LeagueMatchForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/panel/lig/takimlar"
+              element={
+                <ProtectedRoute>
+                  <LeagueTeams />
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Public Routes */}
-          <Route path="/" element={
-            <PublicLayout><Home /></PublicLayout>
-          } />
-          <Route path="/hakkinda" element={
-            <PublicLayout><About /></PublicLayout>
-          } />
-          <Route path="/haberler" element={
-            <PublicLayout><News /></PublicLayout>
-          } />
-          <Route path="/haberler/:slug" element={
-            <PublicLayout><NewsDetail /></PublicLayout>
-          } />
-          <Route path="/iletisim" element={
-            <PublicLayout><Contact /></PublicLayout>
-          } />
-          <Route path="/lig-puan-durumu" element={
-            <PublicLayout><LeagueStandings /></PublicLayout>
-          } />
+            {/* Public Routes */}
+            <Route path="/" element={
+              <PublicLayout><Home /></PublicLayout>
+            } />
+            <Route path="/hakkinda" element={
+              <PublicLayout><About /></PublicLayout>
+            } />
+            <Route path="/haberler" element={
+              <PublicLayout><News /></PublicLayout>
+            } />
+            <Route path="/haberler/:slug" element={
+              <PublicLayout><NewsDetail /></PublicLayout>
+            } />
+            <Route path="/iletisim" element={
+              <PublicLayout><Contact /></PublicLayout>
+            } />
+            <Route path="/lig-puan-durumu" element={
+              <PublicLayout><LeagueStandings /></PublicLayout>
+            } />
 
-          {/* 404 */}
-          <Route path="*" element={
-            <PublicLayout>
-              <div className="container text-center" style={{ paddingTop: '8rem', paddingBottom: '4rem' }}>
-                <div style={{ fontSize: '5rem', marginBottom: '1rem' }}>⚽</div>
-                <h1 className="heading-lg">404 — Sayfa Bulunamadı</h1>
-                <p style={{ color: 'var(--text-muted)', margin: '1rem 0 2rem' }}>
-                  Aradığınız sayfa mevcut değil.
-                </p>
-                <a href="/" className="btn btn-primary">Ana Sayfaya Dön</a>
-              </div>
-            </PublicLayout>
-          } />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+            {/* 404 */}
+            <Route path="*" element={
+              <PublicLayout>
+                <div className="container text-center" style={{ paddingTop: '8rem', paddingBottom: '4rem' }}>
+                  <div style={{ fontSize: '5rem', marginBottom: '1rem' }}>⚽</div>
+                  <h1 className="heading-lg">404 — Sayfa Bulunamadı</h1>
+                  <p style={{ color: 'var(--text-muted)', margin: '1rem 0 2rem' }}>
+                    Aradığınız sayfa mevcut değil.
+                  </p>
+                  <a href="/" className="btn btn-primary">Ana Sayfaya Dön</a>
+                </div>
+              </PublicLayout>
+            } />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </HelmetProvider>
   )
 }
+

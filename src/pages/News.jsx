@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { getAnnouncements } from '../lib/api'
 import { ANNOUNCEMENT_TYPES } from '../lib/supabase'
 import NewsCard from '../components/NewsCard'
+import SEO from '../components/SEO'
 
 const FILTERS = [
   { value: 'all', label: 'Tümü' },
@@ -41,6 +42,7 @@ export default function News() {
 
   return (
     <div className="page-content">
+      <SEO title="Kulüp Haberleri" description="Ergani Yıldız Spor'dan en güncel haberler ve duyurular." />
       {/* Page Hero */}
       <section className="page-hero page-hero-sm">
         <div className="container">

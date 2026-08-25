@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { getLatestAnnouncements } from '../lib/api'
 import NewsCard from '../components/NewsCard'
 import HeroSlider from '../components/HeroSlider'
+import SEO from '../components/SEO'
 
 // Slider resimleri src/assets/slider/ klasöründen
 import sliderImg1 from '../assets/slider/slider1.jpg'
@@ -137,10 +138,10 @@ function AboutSplitSection() {
           {/* Sağ: Görsel */}
           <div ref={imgRef} className={`home-split-visual ${imgVisible ? 'in-view' : ''}`}>
             <div className="home-split-img-main">
-              <img src="/team-photo.jpg" alt="Ergani Yıldız Spor Takım Fotoğrafı" />
+              <img src="/team-photo.jpg" alt="Ergani Yıldız Spor Takım Fotoğrafı" loading="lazy" decoding="async" />
             </div>
             <div className="home-split-img-badge">
-              <img src="/logo.png" alt="Logo" />
+              <img src="/logo.png" alt="Logo" loading="lazy" decoding="async" />
               <span>Ergani Yıldız Spor</span>
             </div>
           </div>
@@ -153,15 +154,16 @@ function AboutSplitSection() {
 /* ─── Academy Split Section ──────────────────────────── */
 function AcademySplitSection() {
   const [ref, visible] = useInView()
+  const [imgRef, imgVisible] = useInView()
 
   return (
     <section ref={ref} className={`home-split-section home-split-alt ${visible ? 'in-view' : ''}`}>
       <div className="container">
         <div className="home-split-grid">
           {/* Sol: Fotoğraf */}
-          <div className="home-split-visual in-view">
+          <div ref={imgRef} className={`home-split-visual ${imgVisible ? 'in-view' : ''}`}>
             <div className="home-split-img-main">
-              <img src={altyapiImg} alt="Yıldızspor Altyapı" />
+              <img src={altyapiImg} alt="Yıldızspor Altyapı" loading="lazy" decoding="async" />
             </div>
             <div className="home-academy-overlay-card">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -447,6 +449,10 @@ export default function Home() {
 
   return (
     <div className="home-page">
+      <SEO 
+        title="Ana Sayfa" 
+        description="Ergani Yıldız Spor Kulübü - Bölgenin Parlayan Yıldızı. Altyapı ve A Takım futbol faaliyetlerimiz."
+      />
       {/* 1. Hero Slider — tam genişlik */}
       <section className="home-hero-wrap" style={{ paddingTop: 'var(--nav-height)' }}>
         <HeroSlider slides={SLIDER_SLIDES} />

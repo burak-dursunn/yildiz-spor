@@ -1,3 +1,6 @@
+import React from 'react'
+import SEO from '../components/SEO'
+
 export default function About() {
   const timeline = [
     { year: '2009', title: 'Kuruluş', desc: 'Ergani Yıldız Spor Futbol Kulübü, bölge futbolunu geliştirme amacıyla kuruldu.' },
@@ -10,6 +13,7 @@ export default function About() {
 
   return (
     <div className="page-content">
+      <SEO title="Hakkımızda" />
       {/* Page Hero */}
       <section className="page-hero">
         <div className="container">

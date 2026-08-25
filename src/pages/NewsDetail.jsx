@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { getAnnouncementBySlug } from '../lib/api'
 import { ANNOUNCEMENT_TYPES, getPublicUrl } from '../lib/supabase'
 import GallerySlider from '../components/GallerySlider'
+import SEO from '../components/SEO'
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('tr-TR', {
@@ -34,6 +35,7 @@ export default function NewsDetail() {
   if (loading) {
     return (
       <div className="loading-center" style={{ minHeight: '100vh' }}>
+        <SEO title="Yükleniyor..." />
         <div className="spinner" />
       </div>
     )
@@ -42,6 +44,7 @@ export default function NewsDetail() {
   if (error || !announcement) {
     return (
       <div className="page-content">
+        <SEO title="Haber Bulunamadı" />
         <div className="container" style={{ paddingTop: '8rem', paddingBottom: '4rem', textAlign: 'center' }}>
           <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>😕</div>
           <h1 className="heading-md">Haber Bulunamadı</h1>
@@ -64,9 +67,18 @@ export default function NewsDetail() {
   const gallery   = announcement_gallery
     .map(g => ({ ...g, image_url: resolveImg(g.image_url) }))
     .sort((a, b) => a.order_index - b.order_index)
+  
+  const plainTextDescription = content.replace(/<[^>]+>/g, '').substring(0, 150) + '...';
 
   return (
     <div className="page-content">
+      <SEO 
+        title={title}
+        description={plainTextDescription}
+        image={coverUrl}
+        url={`/haberler/${slug}`}
+        type="article"
+      />
       {/* Article Hero */}
       <section className="article-hero">
         {coverUrl && (

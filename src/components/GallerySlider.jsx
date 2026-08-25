@@ -42,7 +42,8 @@ export default function GallerySlider({ images, interval = 3500 }) {
             <img
               src={resolveUrl(img.image_url)}
               alt={img.caption || `Fotoğraf ${i + 1}`}
-              loading={i === 0 ? 'eager' : 'lazy'}
+              loading="lazy"
+              decoding="async"
               style={{ cursor: 'pointer' }}
               onClick={() => setLightboxOpen(true)}
             />
