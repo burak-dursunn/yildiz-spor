@@ -94,9 +94,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
-        </div>
-      </section>
     </div>
   )
 }
