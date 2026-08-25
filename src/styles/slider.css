@@ -1,8 +1,8 @@
 /* =============================================
-   Hero Section — Split Layout (Yan Yana)
+   3D Coverflow Slider (Ana Sayfa)
    ============================================= */
 
-.hero-section {
+.cf-section {
   position: relative;
   width: 100%;
   background: var(--bg-default);
@@ -13,195 +13,210 @@
   align-items: center;
 }
 
-.hero-container {
-  display: flex;
-  align-items: center;
-  gap: 4rem;
+.cf-title-container {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  animation: fadeInDown 1s ease forwards;
 }
 
-/* Sol Taraf: İçerik */
-.hero-content {
-  flex: 1;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  background: var(--accent);
-  color: var(--text-primary);
+.cf-title {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-size: clamp(2rem, 5vw, 4rem);
   text-transform: uppercase;
-  padding: 0.4rem 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.hero-title {
-  font-family: 'Oswald', sans-serif;
-  font-size: clamp(2.5rem, 4vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
   letter-spacing: -0.5px;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
 }
 
-.hero-subtitle {
-  font-size: clamp(1rem, 1.5vw, 1.125rem);
+.cf-subtitle {
   color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 2rem;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.hero-actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.hero-controls {
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-/* Sağ Taraf: Görsel */
-.hero-visual {
-  flex: 1;
-  position: relative;
-}
-
-.hero-visual-frame {
+.cf-slider-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/3;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  background: #111;
-}
-
-.hero-image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
-}
-
-.hero-image.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Görsel Üzerindeki Oklar */
-.hero-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  background: rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #fff;
-  border-radius: 50%;
-  font-size: 1.5rem;
+  max-width: 1200px;
+  height: 50vw;
+  max-height: 550px;
+  min-height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 1200px;
+  margin-bottom: 2.5rem;
+}
+
+.cf-slide {
+  position: absolute;
+  width: 65%;
+  max-width: 800px;
+  aspect-ratio: 16/9;
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
-  transition: all 0.2s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+.cf-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cf-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  transition: background 0.6s ease;
+  z-index: 1;
+}
+
+/* Slide Overlay Text */
+.cf-slide-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  z-index: 2;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.cf-slide-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.75rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.cf-slide-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.8);
+}
+
+/* Aktif Slayt */
+.cf-active {
+  transform: translateX(0) scale(1) translateZ(0);
   z-index: 10;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+}
+.cf-active::after {
+  background: rgba(0,0,0,0.1);
+}
+.cf-active .cf-slide-overlay {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+/* Önceki Slayt */
+.cf-prev {
+  transform: translateX(-40%) scale(0.85) translateZ(-100px);
+  z-index: 5;
+}
+
+/* Sonraki Slayt */
+.cf-next {
+  transform: translateX(40%) scale(0.85) translateZ(-100px);
+  z-index: 5;
+}
+
+/* Gizli Slayt */
+.cf-hidden {
+  transform: translateX(0) scale(0.5) translateZ(-200px);
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Oklar */
+.cf-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 20;
+  border-radius: 50%;
+  transition: all 0.3s ease;
   backdrop-filter: blur(4px);
 }
 
-.hero-arrow:hover {
+.cf-arrow:hover {
   background: var(--primary);
   border-color: var(--primary);
   transform: translateY(-50%) scale(1.1);
 }
+.cf-arrow-prev { left: 5%; }
+.cf-arrow-next { right: 5%; }
 
-.hero-arrow-prev { left: 1rem; }
-.hero-arrow-next { right: 1rem; }
-
-/* Noktalar */
-.slider-dots {
+/* Butonlar */
+.cf-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 1.5rem;
+  animation: fadeInUp 1s ease forwards;
+  z-index: 10;
 }
 
-.slider-dot {
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-}
-
-.slider-dot.active {
-  background: var(--accent);
-  width: 24px;
-  border-radius: 10px;
-}
-
-/* Animasyon */
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.animate-slideUp {
-  animation: slideUp 0.65s ease both;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .hero-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 3rem;
-  }
-  .hero-content {
-    align-items: center;
-  }
-  .hero-actions {
-    justify-content: center;
-  }
-  .hero-visual {
-    width: 100%;
-    max-width: 800px;
-  }
+  .cf-slide { width: 75%; }
+  .cf-prev { transform: translateX(-30%) scale(0.85) translateZ(-100px); }
+  .cf-next { transform: translateX(30%) scale(0.85) translateZ(-100px); }
+  .cf-arrow-prev { left: 2%; }
+  .cf-arrow-next { right: 2%; }
 }
 
 @media (max-width: 768px) {
-  .hero-section {
-    padding: 2rem 0;
-    min-height: auto;
-  }
-  .hero-visual-frame {
-    aspect-ratio: 16/9;
-  }
+  .cf-section { padding: 3rem 0; min-height: auto; }
+  .cf-slide { width: 85%; }
+  .cf-prev { transform: translateX(-20%) scale(0.9) translateZ(-50px); }
+  .cf-next { transform: translateX(20%) scale(0.9) translateZ(-50px); }
+  .cf-arrow { width: 40px; height: 40px; font-size: 1.25rem; }
+  .cf-slide-overlay { padding: 1rem; }
+  .cf-slide-title { font-size: 1.25rem; }
+  .cf-slide-desc { font-size: 0.875rem; }
 }
 
 @media (max-width: 480px) {
-  .hero-actions { flex-direction: column; width: 100%; }
-  .hero-actions .btn { width: 100%; justify-content: center; }
-  .hero-arrow { width: 36px; height: 36px; font-size: 1.25rem; }
+  .cf-slider-wrapper { height: 60vw; }
+  .cf-slide { width: 90%; }
+  .cf-prev { transform: translateX(-10%) scale(0.95) translateZ(-30px); }
+  .cf-next { transform: translateX(10%) scale(0.95) translateZ(-30px); }
+  .cf-actions { flex-direction: column; width: 100%; padding: 0 1rem; gap: 1rem; }
+  .cf-actions .btn { width: 100%; justify-content: center; }
+  .cf-arrow { display: none; } /* Mobilde okları gizleyip sadece dokunmatik basma bırak */
 }
+
 
 /* =============================================
    Gallery Slider — Otomatik, Durmuyor
