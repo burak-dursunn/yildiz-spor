@@ -1,18 +1,12 @@
 export default function About() {
   const timeline = [
-    { year: '1985', title: 'Kuruluş', desc: 'Ergani Yıldız Spor Futbol Kulübü, bölge futbolunu geliştirme amacıyla kuruldu.' },
+    { year: '2009', title: 'Kuruluş', desc: 'Ergani Yıldız Spor Futbol Kulübü, bölge futbolunu geliştirme amacıyla kuruldu.' },
     { year: '1992', title: 'İlk Şampiyonluk', desc: 'Bölge liginde ilk kez şampiyon olarak üst ligde mücadele etme hakkı kazanıldı.' },
     { year: '2003', title: 'Altyapı Yatırımı', desc: 'Gençlik ve genç yeteneklere yönelik kapsamlı altyapı çalışmaları başlatıldı.' },
     { year: '2015', title: 'Tesis Yenileme', desc: 'Spor tesisleri modernize edilerek sporcularımıza daha iyi koşullar sağlandı.' },
     { year: '2025', title: 'Dijital Dönüşüm', desc: 'Kulübümüz resmi web sitesi ve dijital platformlarla taraftarlarıyla daha yakın.' },
   ]
 
-  const management = [
-    { name: 'Ahmet Yılmaz', role: 'Kulüp Başkanı', emoji: '👨‍💼' },
-    { name: 'Mehmet Demir', role: 'Teknik Direktör', emoji: '⚽' },
-    { name: 'Ali Kaya', role: 'Genel Sekreter', emoji: '📋' },
-    { name: 'Fatma Çelik', role: 'Basın & İletişim', emoji: '📢' },
-  ]
 
   return (
     <div className="page-content">
@@ -25,7 +19,7 @@ export default function About() {
               <span className="text-gradient">Ergani Yıldız Spor</span>
             </h1>
             <p className="page-hero-desc">
-              1985'ten bu yana Ergani'nin futbol temsilcisi, bölgenin gururu
+              09.10.2009'dan bu yana Ergani'nin futbol temsilcisi, bölgenin gururu
             </p>
           </div>
         </div>
@@ -71,7 +65,7 @@ export default function About() {
                   <path d="M14 30h16" stroke="#22a135" strokeWidth="1" opacity="0.5"/>
                 </svg>
                 <p className="font-heading" style={{ color: 'var(--accent)', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.8rem', marginTop: '1rem' }}>
-                  Est. 1985
+                  Est. 2009
                 </p>
               </div>
             </div>
@@ -101,22 +95,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Management */}
-      <section className="section">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="heading-lg">Yönetim <span className="text-gradient">Kadrosu</span></h2>
-            <div className="section-line" />
-          </div>
-          <div className="grid-4 stagger-children">
-            {management.map(({ name, role, emoji }) => (
-              <div key={name} className="card card-body text-center">
-                <div className="management-avatar">{emoji}</div>
-                <h3 className="heading-sm" style={{ marginBottom: '0.25rem' }}>{name}</h3>
-                <p style={{ color: 'var(--accent)', fontSize: '0.875rem', fontFamily: 'Oswald, sans-serif', letterSpacing: '0.5px' }}>{role}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
     </div>
