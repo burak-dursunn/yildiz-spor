@@ -366,16 +366,15 @@ export default function AnnouncementForm() {
                     <div className="toggle-slider" />
                   </div>
                 </label>
-
                 <button
                   type="submit"
-                  className="btn btn-primary w-full"
-                  style={{ justifyContent: 'center' }}
                   disabled={saving}
+                  className="btn btn-primary"
+                  style={{ width: '100%', justifyContent: 'center' }}
                 >
                   {saving ? (
                     <>
-                      <div className="spinner" style={{ width: '18px', height: '18px', borderWidth: '2px' }} />
+                      <div className="spinner" style={{ width: 16, height: 16, borderWidth: 2 }} />
                       Kaydediliyor...
                     </>
                   ) : (
@@ -384,24 +383,23 @@ export default function AnnouncementForm() {
                 </button>
 
                 {isEditing && (
-                  <div className="flex gap-2">
-                    <Link
-                      to={`/haberler/${originalData?.slug}`}
-                      target="_blank"
-                      className="btn btn-ghost"
-                      style={{ flex: 1, justifyContent: 'center' }}
-                    >
-                      🌐 Sayfada Gör
-                    </Link>
-                    <Link
-                      to="/admin/panel/haberler/yeni"
-                      className="btn btn-primary"
-                      style={{ flex: 1, justifyContent: 'center', backgroundColor: '#10b981', borderColor: '#10b981', color: '#fff' }}
-                    >
-                      + Yeni Duyuru
-                    </Link>
-                  </div>
+                  <Link
+                    to={`/haberler/${originalData?.slug}`}
+                    target="_blank"
+                    className="btn btn-ghost"
+                    style={{ width: '100%', justifyContent: 'center' }}
+                  >
+                    🌐 Sayfada Gör
+                  </Link>
                 )}
+                
+                <a
+                  href="/admin/panel/haberler/yeni"
+                  className="btn btn-primary"
+                  style={{ width: '100%', justifyContent: 'center', backgroundColor: '#10b981', borderColor: '#10b981', color: '#fff' }}
+                >
+                  + Yeni Duyuru
+                </a>
               </div>
             </div>
 

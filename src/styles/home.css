@@ -34,7 +34,7 @@
 
 /* ─── Hero Wrap — Tam Genişlik ───────────────────────── */
 .home-hero-wrap {
-  background: #0a0a0a;
+  background: var(--bg-base);
   padding-bottom: 0;
   /* Slider tam genişlik: container yok */
 }
