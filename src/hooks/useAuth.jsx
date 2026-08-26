@@ -43,7 +43,44 @@ export function AuthProvider({ children }) {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => setUser(session?.user ?? null)
     )
-    return () => subscription.unsubscribe()
+
+    // Activity Timeout Logic (1 hour)
+    const INACTIVITY_TIMEOUT = 60 * 60 * 1000
+    
+    const checkTimeout = () => {
+      const lastActivity = sessionStorage.getItem('admin_last_activity')
+      if (lastActivity && Date.now() - parseInt(lastActivity, 10) > INACTIVITY_TIMEOUT) {
+        // If inactive for too long, force sign out
+        if (USE_MOCK) {
+          sessionStorage.removeItem(MOCK_SESSION_KEY)
+          setUser(null)
+        } else {
+          supabase.auth.signOut()
+        }
+      }
+      sessionStorage.setItem('admin_last_activity', Date.now().toString())
+    }
+
+    checkTimeout()
+    const interval = setInterval(checkTimeout, 60 * 1000) // Check every minute
+
+    const updateActivity = () => {
+      sessionStorage.setItem('admin_last_activity', Date.now().toString())
+    }
+
+    window.addEventListener('mousemove', updateActivity)
+    window.addEventListener('keydown', updateActivity)
+    window.addEventListener('click', updateActivity)
+    window.addEventListener('scroll', updateActivity)
+
+    return () => {
+      subscription.unsubscribe()
+      clearInterval(interval)
+      window.removeEventListener('mousemove', updateActivity)
+      window.removeEventListener('keydown', updateActivity)
+      window.removeEventListener('click', updateActivity)
+      window.removeEventListener('scroll', updateActivity)
+    }
   }, [])
 
   const signIn = async (email, password) => {

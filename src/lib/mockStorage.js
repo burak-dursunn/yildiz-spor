@@ -126,14 +126,9 @@ export function mockDeleteGalleryImage(galleryId) {
   return { data: null, error: null }
 }
 
-export function mockGetPublicUrl(path) {
-  // Local test: path, data URL veya public path olabilir
+function mockGetPublicUrl(path) {
   if (!path) return null
-  if (path.startsWith('local::')) {
-    // Bulamıyoruz — placeholder döndür
-    return null
-  }
-  if (path.startsWith('data:')) return path
+  if (path.startsWith('http') || path.startsWith('data:')) return path
   return path
 }
 

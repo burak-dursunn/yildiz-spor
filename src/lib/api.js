@@ -20,7 +20,7 @@ if (USE_MOCK) {
 }
 
 // Slug oluşturma (Türkçe karakter desteği)
-export function createSlug(text) {
+function createSlug(text) {
   const trMap = { ç:'c', ğ:'g', ı:'i', ö:'o', ş:'s', ü:'u', Ç:'c', Ğ:'g', İ:'i', Ö:'o', Ş:'s', Ü:'u' }
   return text
     .replace(/[çğışöüÇĞİŞÖÜ]/g, c => trMap[c] || c)
@@ -205,7 +205,7 @@ export async function getLatestAnnouncements(limit = 3) {
   return { data, error }
 }
 
-export { USE_MOCK }
+
 
 // ============================================================
 // LİG API — Supabase veya Mock Storage
