@@ -6,14 +6,21 @@ const AuthContext = createContext(null)
 
 const USE_MOCK = !isSupabaseConfigured()
 
-// Mock auth: localStorage tabanlı basit oturum
+// Mock auth: sessionStorage tabanlı basit oturum (Zaman aşımı kontrolü ile)
 const MOCK_ADMIN_EMAIL = 'admin@erganiyildizspor.com'
 const MOCK_ADMIN_PASS  = 'admin1234'
 const MOCK_SESSION_KEY = 'eys_admin_session'
+const MOCK_SESSION_TIMEOUT = 2 * 60 * 60 * 1000 // 2 saat
 
 function getMockUser() {
   try {
-    return JSON.parse(sessionStorage.getItem(MOCK_SESSION_KEY) || 'null')
+    const data = JSON.parse(sessionStorage.getItem(MOCK_SESSION_KEY))
+    if (!data) return null
+    if (Date.now() - data.timestamp > MOCK_SESSION_TIMEOUT) {
+      sessionStorage.removeItem(MOCK_SESSION_KEY)
+      return null
+    }
+    return data.user
   } catch { return null }
 }
 
@@ -43,7 +50,7 @@ export function AuthProvider({ children }) {
     if (USE_MOCK) {
       if (email === MOCK_ADMIN_EMAIL && password === MOCK_ADMIN_PASS) {
         const mockUser = { id: 'mock-admin', email, role: 'admin' }
-        sessionStorage.setItem(MOCK_SESSION_KEY, JSON.stringify(mockUser))
+        sessionStorage.setItem(MOCK_SESSION_KEY, JSON.stringify({ user: mockUser, timestamp: Date.now() }))
         setUser(mockUser)
         return { data: mockUser, error: null }
       }
