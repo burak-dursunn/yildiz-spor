@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { adminGetAnnouncements } from '../../lib/api'
 import { ANNOUNCEMENT_TYPES } from '../../lib/supabase'
-import adminLogo from '../../assets/erganiyildizspor1.png'
 
 function AdminSidebar({ announcements }) {
   const { user, signOut } = useAuth()
@@ -143,7 +142,7 @@ export default function AdminLayout({ children }) {
       {/* Topbar */}
       <div className="admin-topbar">
         <span className="admin-topbar-title" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <img src={adminLogo} alt="Ergani Yıldız Spor Logo" style={{ height: '36px', objectFit: 'contain' }} />
+          <img src="/logo.png" alt="Ergani Yıldız Spor Logo" style={{ height: '36px', objectFit: 'contain' }} />
           Ergani Yıldız Spor — Yönetim Paneli
         </span>
         <Link to="/admin/panel/haberler/yeni" className="btn btn-primary btn-sm">
