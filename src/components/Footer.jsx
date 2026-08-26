@@ -1,15 +1,6 @@
 import { Link } from 'react-router-dom'
 
-function ClubEmblem({ size = 36 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M22 2L4 9v14c0 10 7.5 19.3 18 22 10.5-2.7 18-12 18-22V9L22 2z" fill="#0d3d14" stroke="#22a135" strokeWidth="1.5"/>
-      <path d="M22 7L8 13v10c0 7.5 5.5 14.3 14 16.5C30.5 37.3 36 30.5 36 23V13L22 7z" fill="#1a5c25"/>
-      <path d="M22 12l1.8 5.5H29l-4.6 3.3 1.8 5.5L22 23l-4.2 3.3 1.8-5.5L15 17.5h5.2L22 12z" fill="#f5c518"/>
-      <path d="M14 30h16" stroke="#22a135" strokeWidth="1" opacity="0.5"/>
-    </svg>
-  )
-}
+
 
 const navLinks = [
   { to: '/', label: 'Ana Sayfa' },
@@ -28,7 +19,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer-brand">
             <Link to="/" className="logo">
-              <ClubEmblem />
+              <img src="/logo.png" alt="Ergani Yıldız Spor" width="44" height="44" style={{ objectFit: 'contain' }} />
               <div className="logo-text">
                 <span className="club-name">Ergani Yıldız Spor</span>
                 <span className="club-sub">Futbol Kulübü</span>
@@ -73,7 +64,7 @@ export default function Footer() {
             <p className="footer-title">İletişim</p>
             <ul className="footer-links">
               <li><a href="#">📍 Ergani, Diyarbakır</a></li>
-              <li><a href="tel:+905001234567">📞 (500) 123 45 67</a></li>
+              <li><a href="tel:+905338104661">📞 (533) 810 46 61</a></li>
               <li><a href="mailto:info@erganiyildizspor.com">✉️ info@erganiyildizspor.com</a></li>
             </ul>
           </div>

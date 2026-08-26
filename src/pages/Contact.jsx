@@ -18,7 +18,7 @@ export default function Contact() {
 
   const contactInfo = [
     { icon: '📍', label: 'Adres', value: 'Ergani, Diyarbakır', sub: 'Türkiye' },
-    { icon: '📞', label: 'Telefon', value: '+90 500 123 45 67', sub: 'Hafta içi 09:00 - 18:00' },
+    { icon: '📞', label: 'Telefon', value: '+90 533 810 46 61', sub: 'Hafta içi 09:00 - 18:00' },
     { icon: '✉️', label: 'E-posta', value: 'info@erganiyildizspor.com', sub: 'Yanıt süresi 24-48 saat' },
   ]
 

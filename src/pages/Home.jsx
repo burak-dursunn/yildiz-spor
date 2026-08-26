@@ -5,31 +5,26 @@ import NewsCard from '../components/NewsCard'
 import HeroSlider from '../components/HeroSlider'
 import SEO from '../components/SEO'
 
-// Slider resimleri src/assets/slider/ klasöründen
-import sliderImg1 from '../assets/slider/slider1.jpg'
-import sliderImg2 from '../assets/slider/slider2.jpg'
-import sliderImg3 from '../assets/slider/slider3.jpg'
-// Altyapı fotoğrafı — Vite URL import (Türkçe karakter uyumu)
-const altyapiImg = new URL('../assets/yıldızspor altyapı.jpg', import.meta.url).href
+const altyapiImg = '/yıldızspor altyapı.jpg'
 
 const SLIDER_SLIDES = [
   {
     id: 1,
-    image: sliderImg1,
+    image: '/E.Yıldız Spor Takım Kadrosu-1.jpeg',
     title: 'Ergani Yıldız Spor',
     subtitle: "Ergani'nin Gururu, Bölgenin Yıldızı",
     badge: '⚽ Sezon 2024-25',
   },
   {
     id: 2,
-    image: sliderImg2,
+    image: '/E.Yıldız Spor Takım Kadrosu-2.jpeg',
     title: 'Antrenmanda Kararlılık',
     subtitle: 'Her antrenman bir adım daha ileri. Takımımız en iyisi için çalışıyor.',
     badge: '🏃 Antrenman',
   },
   {
     id: 3,
-    image: sliderImg3,
+    image: '/E.Yıldız Spor Takım Kadrosu-3.jpg',
     title: 'Zafer Bizimle',
     subtitle: 'Taraftarlarımızla birlikte her maçı kazanmak için sahadayız.',
     badge: '🏆 Şampiyonluk',
@@ -99,8 +94,8 @@ function AboutSplitSection() {
           <div className="home-split-text">
             <span className="section-eyebrow">Kulübümüz Hakkında</span>
             <h2 className="home-split-title">
-              2009'dan Beri<br />
-              <span className="text-accent-blue">Ergani'nin</span> Gururu
+              <span className="text-accent-blue">Ergani Yıldız Spor</span><br />
+              Futbol Akademisi
             </h2>
             <p className="home-split-desc">
               Ergani Yıldız Spor, 2009 yılında Ergani'de futbolu köklü bir değer olarak yaşatmak amacıyla kuruldu.
@@ -121,16 +116,11 @@ function AboutSplitSection() {
                 <span className="mini-stat-val">300+</span>
                 <span className="mini-stat-label">Yetiştirilen Sporcu</span>
               </div>
-              <div className="mini-stat-divider" />
-              <div className="mini-stat">
-                <span className="mini-stat-val">5</span>
-                <span className="mini-stat-label">Takım</span>
-              </div>
             </div>
             <Link to="/hakkinda" className="btn btn-primary home-split-btn">
               Kulübü Tanıyın
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </Link>
           </div>
@@ -138,7 +128,7 @@ function AboutSplitSection() {
           {/* Sağ: Görsel */}
           <div ref={imgRef} className={`home-split-visual ${imgVisible ? 'in-view' : ''}`}>
             <div className="home-split-img-main">
-              <img src="/team-photo.jpg" alt="Ergani Yıldız Spor Takım Fotoğrafı" loading="lazy" decoding="async" />
+              <img src="/E.Yıldız Spor Takım Kadrosu-1.jpeg" alt="Ergani Yıldız Spor Takım Fotoğrafı" loading="lazy" decoding="async" />
             </div>
             <div className="home-split-img-badge">
               <img src="/logo.png" alt="Logo" loading="lazy" decoding="async" />
@@ -164,12 +154,6 @@ function AcademySplitSection() {
           <div ref={imgRef} className={`home-split-visual ${imgVisible ? 'in-view' : ''}`}>
             <div className="home-split-img-main">
               <img src={altyapiImg} alt="Yıldızspor Altyapı" loading="lazy" decoding="async" />
-            </div>
-            <div className="home-academy-overlay-card">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-              <span>Lisanslı Teknik Kadro</span>
             </div>
           </div>
 
@@ -204,10 +188,31 @@ function AcademySplitSection() {
             <Link to="/iletisim" className="btn btn-primary home-split-btn">
               Altyapıya Katıl
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </Link>
           </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── U-13 Gallery Section ───────────────────────────── */
+function U13GallerySection() {
+  const [ref, visible] = useInView()
+  return (
+    <section ref={ref} className={`home-section ${visible ? 'in-view' : ''}`}>
+      <div className="container">
+        <div className="home-section-header centered">
+          <span className="section-eyebrow">Geleceğin Yıldızları</span>
+          <h2 className="home-section-title">U-13 Takımımız</h2>
+          <p className="home-section-sub">Futbol akademimizin parlayan yıldızları sahada yeteneklerini sergiliyor.</p>
+        </div>
+        <div className="news-featured-grid">
+          <img src="/E.Yıldız Spor U-13.1.jpeg" alt="U-13 Takımı 1" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} loading="lazy" decoding="async" />
+          <img src="/E.Yıldız Spor U-13.2.jpg" alt="U-13 Takımı 2" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} loading="lazy" decoding="async" />
+          <img src="/E.Yıldız Spor U-13.3.jpg" alt="U-13 Takımı 3" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -230,7 +235,6 @@ function AgeCategories() {
     <section ref={ref} className={`home-section bg-dark-section ${visible ? 'in-view' : ''}`}>
       <div className="container">
         <div className="home-section-header centered light">
-          <span className="section-eyebrow light">Altyapı Takımları</span>
           <h2 className="home-section-title light">Yaş Kategorileri</h2>
           <p className="home-section-sub light">
             Her yaş grubuna özel bilimsel antrenman programları ile çocuğunuzun seviyesine uygun gelişim ortamı.
@@ -320,8 +324,8 @@ function ValuesSection() {
             {
               icon: (
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
               ),
               title: 'Takım Ruhu',
@@ -330,7 +334,7 @@ function ValuesSection() {
             {
               icon: (
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                 </svg>
               ),
               title: 'Bilimsel Gelişim',
@@ -339,7 +343,7 @@ function ValuesSection() {
             {
               icon: (
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               ),
               title: 'Güvenli Ortam',
@@ -348,7 +352,7 @@ function ValuesSection() {
             {
               icon: (
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+                  <circle cx="12" cy="8" r="6" /><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
                 </svg>
               ),
               title: 'Spor Ahlakı',
@@ -420,14 +424,14 @@ function JoinCTASection() {
               Ergani Yıldız Spor altyapısına katılmak için bizimle iletişime geçin.
               Kayıt, antrenman takvimi ve kategoriler hakkında bilgi alabilirsiniz.
             </p>
-          </div>
-          <div className="home-join-actions">
-            <Link to="/iletisim" className="btn btn-white btn-lg">
-              İletişime Geç
-            </Link>
-            <Link to="/hakkinda" className="btn btn-outline-white btn-lg">
-              Kulübü Tanı
-            </Link>
+            <div className="home-join-actions" style={{ flexDirection: 'row', marginTop: '1.5rem' }}>
+              <Link to="/iletisim" className="btn btn-white btn-lg">
+                İletişime Geç
+              </Link>
+              <Link to="/hakkinda" className="btn btn-outline-white btn-lg">
+                Kulübü Tanı
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -449,8 +453,8 @@ export default function Home() {
 
   return (
     <div className="home-page">
-      <SEO 
-        title="Ana Sayfa" 
+      <SEO
+        title="Ana Sayfa"
         description="Ergani Yıldız Spor Kulübü - Bölgenin Parlayan Yıldızı. Altyapı ve A Takım futbol faaliyetlerimiz."
       />
       {/* 1. Hero Slider — tam genişlik */}
@@ -466,6 +470,8 @@ export default function Home() {
 
       {/* 4. Altyapı Tanıtım */}
       <AcademySplitSection />
+
+      <U13GallerySection />
 
       {/* 5. İstatistikler */}
       <StatsBar />
