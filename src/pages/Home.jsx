@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { getLatestAnnouncements } from '../lib/api'
+import { getLatestAnnouncements, getClubGalleryImages } from '../lib/api'
 import NewsCard from '../components/NewsCard'
 import HeroSlider from '../components/HeroSlider'
 import SEO from '../components/SEO'
@@ -198,22 +198,57 @@ function AcademySplitSection() {
   )
 }
 
-/* ─── U-13 Gallery Section ───────────────────────────── */
-function U13GallerySection() {
+/* ─── Gallery Section ───────────────────────────── */
+function GallerySection() {
   const [ref, visible] = useInView()
+  const [images, setImages] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getClubGalleryImages('u-13').then(({ data, error }) => {
+      if (!error && data) {
+        setImages(data)
+      }
+      setLoading(false)
+    })
+  }, [])
+
+  if (!loading && images.length === 0) return null // Hide section if no images
+
   return (
     <section ref={ref} className={`home-section ${visible ? 'in-view' : ''}`}>
       <div className="container">
         <div className="home-section-header centered">
-          <span className="section-eyebrow">Geleceğin Yıldızları</span>
-          <h2 className="home-section-title">U-13 Takımımız</h2>
-          <p className="home-section-sub">Futbol akademimizin parlayan yıldızları sahada yeteneklerini sergiliyor.</p>
+          <span className="section-eyebrow">Anılardan Kareler</span>
+          <h2 className="home-section-title">Resim Galerisi</h2>
+          <p className="home-section-sub">Kulübümüzün unutulmaz anları, antrenmanlar ve maç günleri.</p>
         </div>
-        <div className="news-featured-grid">
-          <img src="/E.Yıldız Spor U-13.1.jpeg" alt="U-13 Takımı 1" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} loading="lazy" decoding="async" />
-          <img src="/E.Yıldız Spor U-13.2.jpg" alt="U-13 Takımı 2" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} loading="lazy" decoding="async" />
-          <img src="/E.Yıldız Spor U-13.3.jpg" alt="U-13 Takımı 3" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} loading="lazy" decoding="async" />
-        </div>
+        {loading ? (
+          <div className="loading-center"><div className="spinner" /></div>
+        ) : (
+          <>
+            <div className="news-featured-grid">
+              {images.slice(0, 3).map(img => (
+                <img 
+                  key={img.id}
+                  src={img.image_url} 
+                  alt="Galeri Resmi" 
+                  style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} 
+                  loading="lazy" 
+                  decoding="async" 
+                />
+              ))}
+            </div>
+            
+            {images.length > 3 && (
+              <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                <Link to="/galeri" className="btn btn-outline" style={{ padding: '0.75rem 2rem' }}>
+                  Tüm Galeriyi Gör
+                </Link>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </section>
   )
@@ -471,7 +506,7 @@ export default function Home() {
       {/* 4. Altyapı Tanıtım */}
       <AcademySplitSection />
 
-      <U13GallerySection />
+      <GallerySection />
 
       {/* 5. İstatistikler */}
       <StatsBar />

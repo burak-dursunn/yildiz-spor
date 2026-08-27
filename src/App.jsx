@@ -12,6 +12,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import News from './pages/News'
 import NewsDetail from './pages/NewsDetail'
+import PublicGallery from './pages/PublicGallery'
 import Contact from './pages/Contact'
 import LeagueStandings from './pages/LeagueStandings'
 
@@ -23,6 +24,7 @@ import AnnouncementForm from './pages/admin/AnnouncementForm'
 import LeaguePanel from './pages/admin/LeaguePanel'
 import LeagueMatchForm from './pages/admin/LeagueMatchForm'
 import LeagueTeams from './pages/admin/LeagueTeams'
+import Gallery from './pages/admin/Gallery'
 
 import './styles/globals.css'
 import './styles/components.css'
@@ -125,6 +127,14 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/admin/panel/galeri"
+              element={
+                <ProtectedRoute>
+                  <Gallery />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Public Routes */}
             <Route path="/" element={
@@ -138,6 +148,9 @@ export default function App() {
             } />
             <Route path="/haberler/:slug" element={
               <PublicLayout><NewsDetail /></PublicLayout>
+            } />
+            <Route path="/galeri" element={
+              <PublicLayout><PublicGallery /></PublicLayout>
             } />
             <Route path="/iletisim" element={
               <PublicLayout><Contact /></PublicLayout>

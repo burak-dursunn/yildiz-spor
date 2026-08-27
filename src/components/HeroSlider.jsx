@@ -78,7 +78,7 @@ export default function HeroSlider({ slides = DEFAULT_SLIDES }) {
         
         {/* Giriş Animasyonlu Başlık */}
         <div className="cf-title-container">
-          <h1 className="cf-title">SİTEMİZE HOŞ GELDİNİZ</h1>
+          <h1 className="cf-title"><span className="text-accent-blue">SİTEMİZE HOŞ GELDİNİZ</span></h1>
           <p className="cf-subtitle">Ergani'nin Gururu, Bölgenin Yıldızı</p>
         </div>
 

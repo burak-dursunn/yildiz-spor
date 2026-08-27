@@ -56,6 +56,15 @@ function AdminSidebar({ announcements }) {
               Yeni Duyuru
             </Link>
           </li>
+          <li>
+            <Link
+              to="/admin/panel/galeri"
+              className={`sidebar-link ${isActive('/admin/panel/galeri') ? 'active' : ''}`}
+            >
+              <span className="icon">🖼️</span>
+              Galeri Yönetimi
+            </Link>
+          </li>
         </ul>
       </nav>
 

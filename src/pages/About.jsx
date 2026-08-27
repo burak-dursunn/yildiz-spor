@@ -26,6 +26,9 @@ export default function About() {
               09.10.2009'dan bu yana Ergani'nin futbol temsilcisi, bölgenin gururu
             </p>
           </div>
+          <div className="page-hero-logo animate-fadeInUp" style={{ animationDelay: '0.2s', display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+            <img src="/logo.png" alt="Ergani Yıldız Spor Logosu" style={{ width: '120px', height: 'auto', dropShadow: '0 4px 20px rgba(0,0,0,0.1)' }} />
+          </div>
         </div>
         <div className="page-hero-shape" />
       </section>
@@ -57,7 +60,7 @@ export default function About() {
             </div>
             <div className="mission-visual animate-fadeInUp" style={{ animationDelay: '0.2s', display: 'flex', justifyContent: 'center' }}>
               <img
-                src="/E.Yıldız Spor Futbol Akademisi+İletişim.jpeg"
+                src="/akademi-iletisim.jpeg"
                 alt="Misyonumuz ve Değerlerimiz"
                 style={{ width: '100%', maxWidth: '400px', aspectRatio: '9/16', objectFit: 'cover', borderRadius: '12px', boxShadow: '0 12px 40px rgba(0,0,0,0.15)' }}
                 loading="lazy"

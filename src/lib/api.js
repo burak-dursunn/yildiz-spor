@@ -397,3 +397,46 @@ export async function getVisitStats() {
     error: null 
   }
 }
+
+// ==========================================
+// Gallery API
+// ==========================================
+
+export async function getClubGalleryImages(category = 'u-13') {
+  const { data, error } = await supabase
+    .from('gallery')
+    .select('*')
+    .eq('category', category)
+    .order('order_index', { ascending: true })
+    .order('created_at', { ascending: false })
+  
+  return { data, error }
+}
+
+export async function addClubGalleryImage(imageUrl, category = 'u-13') {
+  const { data, error } = await supabase
+    .from('gallery')
+    .insert([{ image_url: imageUrl, category }])
+    .select()
+    .single()
+  
+  return { data, error }
+}
+
+export async function removeClubGalleryImage(id) {
+  const { error } = await supabase
+    .from('gallery')
+    .delete()
+    .eq('id', id)
+  
+  return { error }
+}
+
+export async function updateClubGalleryOrder(id, orderIndex) {
+  const { data, error } = await supabase
+    .from('gallery')
+    .update({ order_index: orderIndex })
+    .eq('id', id)
+    
+  return { data, error }
+}

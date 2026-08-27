@@ -21,6 +21,7 @@ export default function Header() {
     { to: '/', label: 'Ana Sayfa' },
     { to: '/hakkinda', label: 'Kulüp' },
     { to: '/haberler', label: 'Haberler' },
+    { to: '/galeri', label: 'Galeri' },
     { to: '/lig-puan-durumu', label: 'Puan Durumu' },
     { to: '/iletisim', label: 'İletişim' },
   ]
@@ -29,11 +30,11 @@ export default function Header() {
     <>
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
         <div className="container header-inner">
-          <Link to="/" className="brand" onClick={() => setMenuOpen(false)}>
-            <img src="/logo.png" alt="Ergani Yıldız Spor Logo" className="brand-logo" style={{ height: '48px', width: 'auto' }} />
-            <div className="brand-text">
-              <span className="brand-name">ERGANİ YILDIZ SPOR</span>
-              <span className="brand-subtitle">FUTBOL KULÜBÜ</span>
+          <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
+            <img src="/logo.png" alt="Ergani Yıldız Spor Logo" className="logo-emblem" style={{ height: '70px', width: 'auto' }} />
+            <div className="logo-text">
+              <span className="club-name">ERGANİ YILDIZ SPOR</span>
+              <span className="club-sub">FUTBOL KULÜBÜ</span>
             </div>
           </Link>
 
