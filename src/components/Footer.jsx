@@ -65,7 +65,7 @@ export default function Footer() {
             <ul className="footer-links">
               <li><a href="#">📍 Ergani, Diyarbakır</a></li>
               <li><a href="tel:+905338104661">📞 (533) 810 46 61</a></li>
-              <li><a href="mailto:info@erganiyildizspor.com">✉️ info@erganiyildizspor.com</a></li>
+              <li><a href="mailto:mehmet_yesil7@hotmail.com">✉️ mehmet_yesil7@hotmail.com</a></li>
             </ul>
           </div>
         </div>

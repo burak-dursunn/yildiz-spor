@@ -10,7 +10,15 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Supabase Edge Function veya EmailJS ile entegre edilebilir
+    
+    // mailto: linkini oluştur
+    const mailtoLink = `mailto:mehmet_yesil7@hotmail.com?subject=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(
+      `Gönderen: ${form.name}\nE-posta: ${form.email}\n\nMesaj:\n${form.message}`
+    )}`
+    
+    // E-posta istemcisini aç
+    window.location.href = mailtoLink
+
     setStatus('success')
     setForm({ name: '', email: '', subject: '', message: '' })
     setTimeout(() => setStatus(null), 5000)
@@ -19,7 +27,7 @@ export default function Contact() {
   const contactInfo = [
     { icon: '📍', label: 'Adres', value: 'Ergani, Diyarbakır', sub: 'Türkiye' },
     { icon: '📞', label: 'Telefon', value: '+90 533 810 46 61', sub: 'Hafta içi 09:00 - 18:00' },
-    { icon: '✉️', label: 'E-posta', value: 'info@erganiyildizspor.com', sub: 'Yanıt süresi 24-48 saat' },
+    { icon: '✉️', label: 'E-posta', value: 'mehmet_yesil7@hotmail.com', sub: 'Yanıt süresi 24-48 saat' },
   ]
 
   return (
