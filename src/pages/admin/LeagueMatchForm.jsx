@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AdminLayout from './AdminLayout'
 import { getTeams, createMatch, updateMatch, getMatch, getMatches } from '../../lib/api'
+import { ADMIN } from '../../lib/adminConfig'
 
 function getResult(homeGoals, awayGoals) {
   if (homeGoals === '' || awayGoals === '') return null
@@ -39,7 +40,7 @@ export default function LeagueMatchForm() {
   useEffect(() => {
     if (!isEdit) return
     getMatch(id).then(({ data }) => {
-      if (!data) return navigate('/admin/panel/lig')
+      if (!data) return navigate(ADMIN?.lig)
       setForm({
         home_team_id: data.home_team_id,
         away_team_id: data.away_team_id,
@@ -99,7 +100,7 @@ export default function LeagueMatchForm() {
     const { error: err } = isEdit ? await updateMatch(id, payload) : await createMatch(payload)
     setSaving(false)
     if (err) return setError(err.message)
-    navigate('/admin/panel/lig')
+    navigate(ADMIN?.lig)
   }
 
   if (loading) return <AdminLayout><div className="loading-center"><div className="spinner"/></div></AdminLayout>
@@ -111,7 +112,7 @@ export default function LeagueMatchForm() {
           <h1 className="admin-page-title">{isEdit ? '✏️ Maç Düzenle' : '⚽ Maç Sonucu Gir'}</h1>
           <p className="admin-page-subtitle">Ev sahibi ve misafir takımı seçin, skoru girin. Sistem puanları otomatik hesaplar.</p>
         </div>
-        <button className="btn btn-ghost" onClick={() => navigate('/admin/panel/lig')}>← Geri</button>
+        <button className="btn btn-ghost" onClick={() => navigate(ADMIN?.lig)}>← Geri</button>
       </div>
 
       <div className="data-table-wrapper">
@@ -233,7 +234,7 @@ export default function LeagueMatchForm() {
             <button type="submit" className="btn btn-primary btn-lg" disabled={saving}>
               {saving ? 'Kaydediliyor…' : isEdit ? '💾 Güncelle' : '💾 Kaydet'}
             </button>
-            <button type="button" className="btn btn-ghost btn-lg" onClick={() => navigate('/admin/panel/lig')}>
+            <button type="button" className="btn btn-ghost btn-lg" onClick={() => navigate(ADMIN?.lig)}>
               İptal
             </button>
           </div>

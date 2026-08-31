@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import AdminLayout from './AdminLayout'
-import { getStandings, getMatches, getTeams, deleteMatch } from '../../lib/api'
+import { getStandings, getMatches, getTeams, deleteMatch, getSetting, updateSetting } from '../../lib/api'
+import { ADMIN } from '../../lib/adminConfig'
 
 function fmtDate(d) {
   if (!d) return '—'
@@ -13,18 +14,34 @@ export default function LeaguePanel() {
   const [matches,   setMatches]   = useState([])
   const [teamCount, setTeamCount] = useState(0)
   const [loading,   setLoading]   = useState(true)
+  const [standingsEnabled, setStandingsEnabled] = useState(true)
+  const [savingSetting, setSavingSetting] = useState(false)
 
   const load = () => {
     setLoading(true)
-    Promise.all([getStandings(), getMatches(), getTeams()]).then(([s, m, t]) => {
+    Promise.all([
+      getStandings(), 
+      getMatches(), 
+      getTeams(),
+      getSetting('league_standings_enabled', true)
+    ]).then(([s, m, t, set]) => {
       setStandings(s.data || [])
       setMatches(m.data || [])
       setTeamCount((t.data || []).length)
+      setStandingsEnabled(set.data === 'true' || set.data === true)
       setLoading(false)
     })
   }
 
   useEffect(load, [])
+
+  const toggleStandings = async () => {
+    setSavingSetting(true)
+    const newValue = !standingsEnabled
+    await updateSetting('league_standings_enabled', newValue)
+    setStandingsEnabled(newValue)
+    setSavingSetting(false)
+  }
 
   const handleDeleteMatch = async (id, label) => {
     if (!window.confirm(`"${label}" maçını silmek istiyor musunuz?`)) return
@@ -42,8 +59,8 @@ export default function LeaguePanel() {
           <p className="admin-page-subtitle">Takımları ve maç sonuçlarını buradan yönetin.</p>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
-          <Link to="/admin/panel/lig/mac-gir" className="btn btn-accent">+ Maç Sonucu Gir</Link>
-          <Link to="/admin/panel/lig/takimlar" className="btn btn-ghost">Takımları Düzenle</Link>
+          <Link to={ADMIN?.ligMacGir} className="btn btn-accent">+ Maç Sonucu Gir</Link>
+          <Link to={ADMIN?.ligTakimlar} className="btn btn-ghost">Takımları Düzenle</Link>
         </div>
       </div>
 
@@ -77,9 +94,23 @@ export default function LeaguePanel() {
 
       {/* Mini Puan Tablosu */}
       <div className="data-table-wrapper" style={{ marginBottom: '1.5rem' }}>
-        <div className="data-table-header">
+        <div className="data-table-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h3 className="heading-sm">Puan Tablosu (Özet)</h3>
-          <Link to="/lig-puan-durumu" target="_blank" className="btn btn-ghost btn-sm">Siteyi Gör ↗</Link>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <button 
+              onClick={toggleStandings} 
+              disabled={savingSetting || loading}
+              className="btn btn-sm"
+              style={
+                standingsEnabled 
+                  ? { background: '#ef4444', color: '#fff', borderColor: '#ef4444' } 
+                  : { background: '#22c55e', color: '#fff', borderColor: '#22c55e' }
+              }
+            >
+              {savingSetting ? 'Kaydediliyor...' : standingsEnabled ? '👁️ Sitede Gizle' : '👁️ Sitede Göster'}
+            </button>
+            <Link to="/lig-puan-durumu" target="_blank" className="btn btn-ghost btn-sm">Siteyi Gör ↗</Link>
+          </div>
         </div>
         {loading ? (
           <div className="loading-center" style={{ minHeight: 120 }}><div className="spinner"/></div>
@@ -126,7 +157,7 @@ export default function LeaguePanel() {
         ) : matches.length === 0 ? (
           <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
             Henüz maç girişi yapılmadı.{' '}
-            <Link to="/admin/panel/lig/mac-gir" style={{ color: 'var(--primary)' }}>İlk maçı girin →</Link>
+            <Link to={ADMIN?.ligMacGir} style={{ color: 'var(--primary)' }}>İlk maçı girin →</Link>
           </div>
         ) : (
           <table className="data-table">
@@ -158,7 +189,7 @@ export default function LeaguePanel() {
                       {m.away_team?.is_our_team && '⭐ '}{awayLabel}
                     </td>
                     <td style={{ display: 'flex', gap: '0.5rem' }}>
-                      <Link to={`/admin/panel/lig/mac-gir/${m.id}`} className="action-btn action-btn-edit">Düzenle</Link>
+                      <Link to={ADMIN?.ligMacEdit(m.id)} className="action-btn action-btn-edit">Düzenle</Link>
                       <button className="action-btn action-btn-delete" onClick={() => handleDeleteMatch(m.id, label)}>Sil</button>
                     </td>
                   </tr>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { adminGetAnnouncements, deleteAnnouncement, updateAnnouncement } from '../../lib/api'
 import { ANNOUNCEMENT_TYPES, getPublicUrl } from '../../lib/supabase'
 import AdminLayout from './AdminLayout'
+import { ADMIN } from '../../lib/adminConfig'
 
 function formatDate(d) {
   return new Date(d).toLocaleString('tr-TR', { 
@@ -63,7 +64,7 @@ export default function AnnouncementList() {
           <h1 className="admin-page-title">Duyurular</h1>
           <p className="admin-page-subtitle">Tüm duyuru ve haberleri yönetin</p>
         </div>
-        <Link to="/admin/panel/haberler/yeni" className="btn btn-accent">
+        <Link to={ADMIN?.haberlerYeni} className="btn btn-accent">
           + Yeni Duyuru
         </Link>
       </div>
@@ -150,7 +151,7 @@ export default function AnnouncementList() {
                       <div className="table-actions">
                         <button
                           className="action-btn action-btn-edit"
-                          onClick={() => navigate(`/admin/panel/haberler/${a.id}`)}
+                          onClick={() => navigate(ADMIN?.haberlerEdit(a.id))}
                         >
                           Düzenle
                         </button>

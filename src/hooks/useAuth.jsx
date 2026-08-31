@@ -6,11 +6,11 @@ const AuthContext = createContext(null)
 
 const USE_MOCK = !isSupabaseConfigured()
 
-// Mock auth: sessionStorage tabanlı basit oturum (Zaman aşımı kontrolü ile)
-const MOCK_ADMIN_EMAIL = 'admin@erganiyildizspor.com'
-const MOCK_ADMIN_PASS  = 'admin1234'
-const MOCK_SESSION_KEY = 'eys_admin_session'
+// Mock kimlik bilgileri .env.local'den okunur — kaynak kodda hardcode edilmez.
+// Supabase aktifken bu değerler hiç kullanılmaz.
+const MOCK_SESSION_KEY     = 'eys_s'          // kasıtlı kısa/belirsiz anahtar
 const MOCK_SESSION_TIMEOUT = 2 * 60 * 60 * 1000 // 2 saat
+const INACTIVITY_TIMEOUT   = 60 * 60 * 1000     // 1 saat hareketsizlik
 
 function getMockUser() {
   try {
@@ -32,9 +32,34 @@ export function AuthProvider({ children }) {
     if (USE_MOCK) {
       setUser(getMockUser())
       setLoading(false)
-      return
+
+      // Mock modda da inactivity timeout çalışsın
+      const checkMockTimeout = () => {
+        const lastActivity = sessionStorage.getItem('eys_la_ts')
+        if (lastActivity && Date.now() - parseInt(lastActivity, 10) > INACTIVITY_TIMEOUT) {
+          sessionStorage.removeItem(MOCK_SESSION_KEY)
+          setUser(null)
+        }
+        sessionStorage.setItem('eys_la_ts', Date.now().toString())
+      }
+
+      checkMockTimeout()
+      const interval = setInterval(checkMockTimeout, 60 * 1000)
+
+      const updateActivity = () => sessionStorage.setItem('eys_la_ts', Date.now().toString())
+      window.addEventListener('mousemove', updateActivity, { passive: true })
+      window.addEventListener('keydown', updateActivity, { passive: true })
+      window.addEventListener('click', updateActivity, { passive: true })
+
+      return () => {
+        clearInterval(interval)
+        window.removeEventListener('mousemove', updateActivity)
+        window.removeEventListener('keydown', updateActivity)
+        window.removeEventListener('click', updateActivity)
+      }
     }
 
+    // ── Supabase modu ──────────────────────────────────────────────────────────
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
       setLoading(false)
@@ -44,34 +69,22 @@ export function AuthProvider({ children }) {
       (_event, session) => setUser(session?.user ?? null)
     )
 
-    // Activity Timeout Logic (1 hour)
-    const INACTIVITY_TIMEOUT = 60 * 60 * 1000
-    
     const checkTimeout = () => {
-      const lastActivity = sessionStorage.getItem('admin_last_activity')
+      const lastActivity = sessionStorage.getItem('eys_la_ts')
       if (lastActivity && Date.now() - parseInt(lastActivity, 10) > INACTIVITY_TIMEOUT) {
-        // If inactive for too long, force sign out
-        if (USE_MOCK) {
-          sessionStorage.removeItem(MOCK_SESSION_KEY)
-          setUser(null)
-        } else {
-          supabase.auth.signOut()
-        }
+        supabase.auth.signOut()
       }
-      sessionStorage.setItem('admin_last_activity', Date.now().toString())
+      sessionStorage.setItem('eys_la_ts', Date.now().toString())
     }
 
     checkTimeout()
-    const interval = setInterval(checkTimeout, 60 * 1000) // Check every minute
+    const interval = setInterval(checkTimeout, 60 * 1000)
 
-    const updateActivity = () => {
-      sessionStorage.setItem('admin_last_activity', Date.now().toString())
-    }
-
-    window.addEventListener('mousemove', updateActivity)
-    window.addEventListener('keydown', updateActivity)
-    window.addEventListener('click', updateActivity)
-    window.addEventListener('scroll', updateActivity)
+    const updateActivity = () => sessionStorage.setItem('eys_la_ts', Date.now().toString())
+    window.addEventListener('mousemove', updateActivity, { passive: true })
+    window.addEventListener('keydown', updateActivity, { passive: true })
+    window.addEventListener('click', updateActivity, { passive: true })
+    window.addEventListener('scroll', updateActivity, { passive: true })
 
     return () => {
       subscription.unsubscribe()
@@ -85,25 +98,39 @@ export function AuthProvider({ children }) {
 
   const signIn = async (email, password) => {
     if (USE_MOCK) {
-      if (email === MOCK_ADMIN_EMAIL && password === MOCK_ADMIN_PASS) {
+      // Kimlik bilgileri env'den okunur — kaynak kodda yoktur
+      const validEmail = import.meta.env.VITE_MOCK_ADMIN_EMAIL
+      const validPass  = import.meta.env.VITE_MOCK_ADMIN_PASS
+
+      // Env tanımlı değilse mock moda izin verme
+      if (!validEmail || !validPass) {
+        return { data: null, error: { message: 'Sistem yapılandırması eksik. Lütfen yöneticiyle iletişime geçin.' } }
+      }
+
+      if (email === validEmail && password === validPass) {
         const mockUser = { id: 'mock-admin', email, role: 'admin' }
         sessionStorage.setItem(MOCK_SESSION_KEY, JSON.stringify({ user: mockUser, timestamp: Date.now() }))
+        sessionStorage.setItem('eys_la_ts', Date.now().toString())
         setUser(mockUser)
         return { data: mockUser, error: null }
       }
-      return { data: null, error: { message: 'Hatalı e-posta veya şifre' } }
+
+      return { data: null, error: { message: 'Hatalı kimlik bilgileri.' } }
     }
 
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    if (!error) sessionStorage.setItem('eys_la_ts', Date.now().toString())
     return { data, error }
   }
 
   const signOut = async () => {
     if (USE_MOCK) {
       sessionStorage.removeItem(MOCK_SESSION_KEY)
+      sessionStorage.removeItem('eys_la_ts')
       setUser(null)
       return
     }
+    sessionStorage.removeItem('eys_la_ts')
     await supabase.auth.signOut()
   }
 

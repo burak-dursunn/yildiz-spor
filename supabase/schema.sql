@@ -276,3 +276,27 @@ create policy "Admin read page views"
 create policy "Admin delete page views"
   on page_views for delete
   using (auth.role() = 'authenticated');
+
+-- =============================================
+-- SİTE AYARLARI (Dinami ayarlar)
+-- =============================================
+create table if not exists site_settings (
+  id text primary key,
+  value jsonb not null,
+  updated_at timestamptz default now()
+);
+
+alter table site_settings enable row level security;
+
+create policy "Public read settings"
+  on site_settings for select using (true);
+
+create policy "Admin full access settings"
+  on site_settings for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+
+-- Varsayılan ayar: Puan durumu görünür mü?
+insert into site_settings (id, value) 
+values ('league_standings_enabled', 'true'::jsonb) 
+on conflict (id) do nothing;

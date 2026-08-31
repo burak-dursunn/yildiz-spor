@@ -440,3 +440,33 @@ export async function updateClubGalleryOrder(id, orderIndex) {
     
   return { data, error }
 }
+
+// ==========================================
+// Settings API
+// ==========================================
+
+export async function getSetting(id, defaultValue = null) {
+  if (USE_MOCK) return { data: defaultValue, error: null }
+  const { data, error } = await supabase
+    .from('site_settings')
+    .select('value')
+    .eq('id', id)
+    .single()
+  
+  // If not found, return defaultValue
+  if (error && error.code === 'PGRST116') {
+    return { data: defaultValue, error: null }
+  }
+  return { data: data ? data.value : defaultValue, error }
+}
+
+export async function updateSetting(id, value) {
+  if (USE_MOCK) return { data: value, error: null }
+  const { data, error } = await supabase
+    .from('site_settings')
+    .upsert({ id, value, updated_at: new Date().toISOString() })
+    .select()
+    .single()
+    
+  return { data: data ? data.value : null, error }
+}

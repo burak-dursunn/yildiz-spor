@@ -6,6 +6,7 @@ import {
 } from '../../lib/api'
 import { ANNOUNCEMENT_TYPES, getPublicUrl } from '../../lib/supabase'
 import AdminLayout from './AdminLayout'
+import { ADMIN } from '../../lib/adminConfig'
 
 const INITIAL_FORM = {
   title: '',
@@ -239,7 +240,7 @@ export default function AnnouncementForm() {
       if (!isEditing) {
         setSuccess('Duyuru başarıyla oluşturuldu!')
         setTimeout(() => setSuccess(''), 3000)
-        navigate(`/admin/panel/haberler/${result.data.id}`, { replace: true })
+        navigate(ADMIN?.haberlerEdit(result.data.id), { replace: true })
       } else {
         setSuccess('Duyuru başarıyla güncellendi!')
         setTimeout(() => setSuccess(''), 3000)
@@ -268,7 +269,7 @@ export default function AnnouncementForm() {
             {isEditing ? 'Duyuru bilgilerini güncelleyin' : 'Yeni bir duyuru veya haber oluşturun'}
           </p>
         </div>
-        <Link to="/admin/panel/haberler" className="btn btn-ghost">
+        <Link to={ADMIN?.haberler} className="btn btn-ghost">
           ← Listeye Dön
         </Link>
       </div>
@@ -394,7 +395,7 @@ export default function AnnouncementForm() {
                 )}
                 
                 <a
-                  href="/admin/panel/haberler/yeni"
+                  href={ADMIN?.haberlerYeni}
                   className="btn btn-primary"
                   style={{ width: '100%', justifyContent: 'center', backgroundColor: '#10b981', borderColor: '#10b981', color: '#fff' }}
                 >

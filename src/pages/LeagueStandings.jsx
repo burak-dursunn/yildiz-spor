@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getStandings, getMatches } from '../lib/api'
+import { getStandings, getMatches, getSetting } from '../lib/api'
 
 function fmtDate(d) {
   if (!d) return '—'
@@ -11,11 +11,17 @@ export default function LeagueStandings() {
   const [matches,   setMatches]   = useState([])
   const [loading,   setLoading]   = useState(true)
   const [activeTab, setActiveTab] = useState('table')  // 'table' | 'results'
+  const [standingsEnabled, setStandingsEnabled] = useState(true)
 
   useEffect(() => {
-    Promise.all([getStandings(), getMatches()]).then(([s, m]) => {
+    Promise.all([
+      getStandings(), 
+      getMatches(),
+      getSetting('league_standings_enabled', true)
+    ]).then(([s, m, set]) => {
       setStandings(s.data || [])
       setMatches(m.data || [])
+      setStandingsEnabled(set.data === 'true' || set.data === true)
       setLoading(false)
     })
   }, [])
@@ -64,6 +70,12 @@ export default function LeagueStandings() {
         {loading ? (
           <div className="loading-center" style={{ minHeight: 300 }}>
             <div className="spinner" />
+          </div>
+        ) : !standingsEnabled ? (
+          <div className="league-empty">
+            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔒</div>
+            <h2>Puan Durumu Şimdilik Kapalı</h2>
+            <p>Puan durumu ve maç sonuçları şu anlık mevcut değil veya güncelleniyor.</p>
           </div>
         ) : activeTab === 'table' ? (
           /* ── Puan Tablosu ── */

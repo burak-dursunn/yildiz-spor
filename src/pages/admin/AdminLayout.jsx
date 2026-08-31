@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { adminGetAnnouncements } from '../../lib/api'
 import { ANNOUNCEMENT_TYPES } from '../../lib/supabase'
+import { ADMIN } from '../../lib/adminConfig'
 
 function AdminSidebar({ announcements }) {
   const { user, signOut } = useAuth()
@@ -11,7 +12,7 @@ function AdminSidebar({ announcements }) {
 
   const handleSignOut = async () => {
     await signOut()
-    navigate('/admin')
+    navigate(ADMIN?.base || '/')
   }
 
   const isActive = (path) => location.pathname === path
@@ -30,8 +31,8 @@ function AdminSidebar({ announcements }) {
         <ul className="sidebar-nav">
           <li>
             <Link
-              to="/admin/panel"
-              className={`sidebar-link ${isActive('/admin/panel') ? 'active' : ''}`}
+              to={ADMIN?.panel}
+              className={`sidebar-link ${isActive(ADMIN?.panel) ? 'active' : ''}`}
             >
               <span className="icon">📊</span>
               Dashboard
@@ -39,8 +40,8 @@ function AdminSidebar({ announcements }) {
           </li>
           <li>
             <Link
-              to="/admin/panel/haberler"
-              className={`sidebar-link ${isActive('/admin/panel/haberler') ? 'active' : ''}`}
+              to={ADMIN?.haberler}
+              className={`sidebar-link ${isActive(ADMIN?.haberler) ? 'active' : ''}`}
             >
               <span className="icon">📰</span>
               Duyurular
@@ -49,8 +50,8 @@ function AdminSidebar({ announcements }) {
           </li>
           <li>
             <Link
-              to="/admin/panel/haberler/yeni"
-              className={`sidebar-link ${isActive('/admin/panel/haberler/yeni') ? 'active' : ''}`}
+              to={ADMIN?.haberlerYeni}
+              className={`sidebar-link ${isActive(ADMIN?.haberlerYeni) ? 'active' : ''}`}
             >
               <span className="icon">✏️</span>
               Yeni Duyuru
@@ -58,8 +59,8 @@ function AdminSidebar({ announcements }) {
           </li>
           <li>
             <Link
-              to="/admin/panel/galeri"
-              className={`sidebar-link ${isActive('/admin/panel/galeri') ? 'active' : ''}`}
+              to={ADMIN?.galeri}
+              className={`sidebar-link ${isActive(ADMIN?.galeri) ? 'active' : ''}`}
             >
               <span className="icon">🖼️</span>
               Galeri Yönetimi
@@ -73,8 +74,8 @@ function AdminSidebar({ announcements }) {
         <ul className="sidebar-nav">
           <li>
             <Link
-              to="/admin/panel/lig"
-              className={`sidebar-link ${isActive('/admin/panel/lig') ? 'active' : ''}`}
+              to={ADMIN?.lig}
+              className={`sidebar-link ${isActive(ADMIN?.lig) ? 'active' : ''}`}
             >
               <span className="icon">🏆</span>
               Lig Yönetimi
@@ -82,8 +83,8 @@ function AdminSidebar({ announcements }) {
           </li>
           <li>
             <Link
-              to="/admin/panel/lig/mac-gir"
-              className={`sidebar-link ${isActive('/admin/panel/lig/mac-gir') ? 'active' : ''}`}
+              to={ADMIN?.ligMacGir}
+              className={`sidebar-link ${isActive(ADMIN?.ligMacGir) ? 'active' : ''}`}
             >
               <span className="icon">⚽</span>
               Maç Sonucu Gir
@@ -91,8 +92,8 @@ function AdminSidebar({ announcements }) {
           </li>
           <li>
             <Link
-              to="/admin/panel/lig/takimlar"
-              className={`sidebar-link ${isActive('/admin/panel/lig/takimlar') ? 'active' : ''}`}
+              to={ADMIN?.ligTakimlar}
+              className={`sidebar-link ${isActive(ADMIN?.ligTakimlar) ? 'active' : ''}`}
             >
               <span className="icon">👥</span>
               Takımlar
@@ -117,15 +118,22 @@ function AdminSidebar({ announcements }) {
       </nav>
 
       <div className="sidebar-footer">
-        <div className="flex items-center gap-3" style={{ marginBottom: '0.75rem' }}>
+        <Link
+          to={ADMIN?.ayarlar}
+          style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem', padding: '0.5rem', borderRadius: '8px', textDecoration: 'none', transition: 'background 0.15s' }}
+          onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-card)'}
+          onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+          title="Hesap Ayarları"
+        >
           <div className="admin-avatar">{userInitial}</div>
-          <div>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <p style={{ fontSize: '0.875rem', fontWeight: 500 }}>Admin</p>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '140px' }}>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {user?.email}
             </p>
           </div>
-        </div>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>⚙️</span>
+        </Link>
         <div className="flex gap-2">
           <Link to="/" target="_blank" className="btn btn-ghost btn-sm" style={{ flex: 1, justifyContent: 'center' }}>
             🌐 Site
@@ -154,7 +162,7 @@ export default function AdminLayout({ children }) {
           <img src="/logo.png" alt="Ergani Yıldız Spor Logo" style={{ height: '36px', objectFit: 'contain' }} />
           Ergani Yıldız Spor — Yönetim Paneli
         </span>
-        <Link to="/admin/panel/haberler/yeni" className="btn btn-primary btn-sm">
+        <Link to={ADMIN?.haberlerYeni} className="btn btn-primary btn-sm">
           + Yeni Duyuru
         </Link>
       </div>

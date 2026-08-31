@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { adminGetAnnouncements, getVisitStats } from '../../lib/api'
 import { ANNOUNCEMENT_TYPES } from '../../lib/supabase'
 import AdminLayout from './AdminLayout'
+import { ADMIN } from '../../lib/adminConfig'
 
 function formatDate(d) {
   return new Date(d).toLocaleString('tr-TR', { 
@@ -39,7 +40,7 @@ export default function Dashboard() {
           <h1 className="admin-page-title">Dashboard</h1>
           <p className="admin-page-subtitle">Kulüp içerik yönetim panelinize hoş geldiniz.</p>
         </div>
-        <Link to="/admin/panel/haberler/yeni" className="btn btn-accent">
+        <Link to={ADMIN?.haberlerYeni} className="btn btn-accent">
           + Yeni Duyuru
         </Link>
       </div>
@@ -96,7 +97,7 @@ export default function Dashboard() {
       <div className="data-table-wrapper">
         <div className="data-table-header">
           <h3 className="heading-sm">Son Duyurular</h3>
-          <Link to="/admin/panel/haberler" className="btn btn-ghost btn-sm">
+          <Link to={ADMIN?.haberler} className="btn btn-ghost btn-sm">
             Tümünü Gör →
           </Link>
         </div>
@@ -140,7 +141,7 @@ export default function Dashboard() {
                   </td>
                   <td>
                     <Link
-                      to={`/admin/panel/haberler/${a.id}`}
+                      to={ADMIN?.haberlerEdit(a.id)}
                       className="action-btn action-btn-edit"
                     >
                       Düzenle
@@ -151,7 +152,7 @@ export default function Dashboard() {
               {recent.length === 0 && (
                 <tr>
                   <td colSpan={5} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
-                    Henüz duyuru bulunmuyor. <Link to="/admin/panel/haberler/yeni" style={{ color: 'var(--primary)' }}>İlk duyuruyu oluşturun →</Link>
+                    Henüz duyuru bulunmuyor. <Link to={ADMIN?.haberlerYeni} style={{ color: 'var(--primary)' }}>İlk duyuruyu oluşturun →</Link>
                   </td>
                 </tr>
               )}
