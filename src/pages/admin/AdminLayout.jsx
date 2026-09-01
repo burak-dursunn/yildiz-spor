@@ -117,13 +117,25 @@ function AdminSidebar({ announcements }) {
         </ul>
       </nav>
 
+      <p className="sidebar-section-title">Sistem</p>
+      <nav>
+        <ul className="sidebar-nav">
+          <li>
+            <Link
+              to={ADMIN?.ayarlar}
+              className={`sidebar-link ${isActive(ADMIN?.ayarlar) ? 'active' : ''}`}
+            >
+              <span className="icon">⚙️</span>
+              Hesap Ayarları
+            </Link>
+          </li>
+        </ul>
+      </nav>
+
       <div className="sidebar-footer">
-        <Link
-          to={ADMIN?.ayarlar}
-          style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem', padding: '0.5rem', borderRadius: '8px', textDecoration: 'none', transition: 'background 0.15s' }}
-          onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-card)'}
-          onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-          title="Hesap Ayarları"
+        <div
+          style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem', padding: '0.5rem', borderRadius: '8px' }}
+          title="Mevcut Kullanıcı"
         >
           <div className="admin-avatar">{userInitial}</div>
           <div style={{ flex: 1, minWidth: 0 }}>
@@ -132,8 +144,7 @@ function AdminSidebar({ announcements }) {
               {user?.email}
             </p>
           </div>
-          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>⚙️</span>
-        </Link>
+        </div>
         <div className="flex gap-2">
           <Link to="/" target="_blank" className="btn btn-ghost btn-sm" style={{ flex: 1, justifyContent: 'center' }}>
             🌐 Site

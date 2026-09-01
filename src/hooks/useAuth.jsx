@@ -66,7 +66,15 @@ export function AuthProvider({ children }) {
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => setUser(session?.user ?? null)
+      (event, session) => {
+        setUser(session?.user ?? null)
+        if (event === 'PASSWORD_RECOVERY') {
+          // Kullanıcı şifre sıfırlama linkine tıkladığında Supabase onu geçici olarak giriş yaptırır
+          // ve bu eventi fırlatır. Biz de onu hemen şifre değiştirme sayfasına yönlendiririz.
+          const adminPath = import.meta.env.VITE_ADMIN_PATH || '/admin'
+          window.location.href = `${adminPath}/panel/ayarlar?recovery=true`
+        }
+      }
     )
 
     const checkTimeout = () => {
@@ -96,19 +104,20 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
-  const signIn = async (email, password) => {
+  const signIn = async (identifier, password) => {
+    const isEmail = identifier.includes('@')
+
     if (USE_MOCK) {
       // Kimlik bilgileri env'den okunur — kaynak kodda yoktur
       const validEmail = import.meta.env.VITE_MOCK_ADMIN_EMAIL
       const validPass  = import.meta.env.VITE_MOCK_ADMIN_PASS
 
-      // Env tanımlı değilse mock moda izin verme
       if (!validEmail || !validPass) {
-        return { data: null, error: { message: 'Sistem yapılandırması eksik. Lütfen yöneticiyle iletişime geçin.' } }
+        return { data: null, error: { message: 'Sistem yapılandırması eksik.' } }
       }
 
-      if (email === validEmail && password === validPass) {
-        const mockUser = { id: 'mock-admin', email, role: 'admin' }
+      if (identifier === validEmail && password === validPass) {
+        const mockUser = { id: 'mock-admin', email: identifier, role: 'admin' }
         sessionStorage.setItem(MOCK_SESSION_KEY, JSON.stringify({ user: mockUser, timestamp: Date.now() }))
         sessionStorage.setItem('eys_la_ts', Date.now().toString())
         setUser(mockUser)
@@ -118,9 +127,33 @@ export function AuthProvider({ children }) {
       return { data: null, error: { message: 'Hatalı kimlik bilgileri.' } }
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    const credentials = isEmail ? { email: identifier, password } : { phone: identifier, password }
+    const { data, error } = await supabase.auth.signInWithPassword(credentials)
     if (!error) sessionStorage.setItem('eys_la_ts', Date.now().toString())
     return { data, error }
+  }
+
+  const sendPasswordResetOtp = async (email) => {
+    if (USE_MOCK) return { error: null } // Mock success
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email)
+    return { data, error }
+  }
+
+  const verifyResetOtpAndSetPassword = async (email, token, newPassword) => {
+    if (USE_MOCK) return { error: null } // Mock success
+    
+    // 1. Kodu doğrula
+    const { error: verifyError } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: 'recovery'
+    })
+    
+    if (verifyError) return { error: verifyError }
+    
+    // 2. Doğrulama başarılıysa (oturum açılır), yeni şifreyi belirle
+    const { data, error: updateError } = await supabase.auth.updateUser({ password: newPassword })
+    return { data, error: updateError }
   }
 
   const signOut = async () => {
@@ -135,7 +168,10 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ 
+      user, loading, signIn, signOut, 
+      sendPasswordResetOtp, verifyResetOtpAndSetPassword 
+    }}>
       {children}
     </AuthContext.Provider>
   )

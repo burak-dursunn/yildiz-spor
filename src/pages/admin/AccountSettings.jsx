@@ -175,7 +175,7 @@ export default function AccountSettings() {
         {/* ── Şifre Değiştir ──────────────────────────────────────── */}
         <div className="data-table-wrapper">
           <h2 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--border)' }}>
-            🔐 Şifre Değiştir
+            🔐 Şifremi Unuttum / Şifre Yenileme
           </h2>
 
           {passSuccess && (

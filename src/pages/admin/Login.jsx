@@ -18,13 +18,20 @@ function formatRemaining(ms) {
 }
 
 export default function AdminLogin() {
-  const { user, signIn } = useAuth()
+  const { user, signIn, sendPasswordResetOtp } = useAuth()
 
   const [email,        setEmail]        = useState('')
   const [password,     setPassword]     = useState('')
   const [loading,      setLoading]      = useState(false)
   const [error,        setError]        = useState('')
   const [showPassword, setShowPassword] = useState(false)
+
+  // Şifremi Unuttum State
+  const [showForgot,    setShowForgot]    = useState(false)
+  const [forgotEmail,   setForgotEmail]   = useState('')
+  const [forgotError,   setForgotError]   = useState('')
+  const [forgotSuccess, setForgotSuccess] = useState('')
+  const [forgotLoading, setForgotLoading] = useState(false)
 
   // Rate limiting durumu
   const [lockout,    setLockout]    = useState(getLockoutStatus())
@@ -89,6 +96,21 @@ export default function AdminLogin() {
     }
   }, [email, password, signIn])
 
+  const handleForgotSubmit = async (e) => {
+    e.preventDefault()
+    setForgotError(''); setForgotSuccess('')
+    setForgotLoading(true)
+
+    const { error } = await sendPasswordResetOtp(forgotEmail)
+    setForgotLoading(false)
+    if (error) {
+      setForgotError(error.message || 'Bağlantı gönderilemedi.')
+    } else {
+      setForgotSuccess('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi. Lütfen gelen kutunuzu kontrol edin.')
+      setTimeout(() => setShowForgot(false), 5000)
+    }
+  }
+
   if (user) return <Navigate to={ADMIN?.panel || '/'} replace />
 
 
@@ -137,13 +159,13 @@ export default function AdminLogin() {
 
           <form className="admin-login-form" onSubmit={handleSubmit} autoComplete="off">
             <div className="form-group">
-              <label className="form-label">E-posta</label>
+              <label className="form-label">E-posta veya Telefon</label>
               <input
                 className="form-input"
-                type="email"
+                type="text"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                placeholder="••••••@••••••••"
+                placeholder="ornek@email.com veya 5551234567"
                 required
                 autoComplete="username"
                 disabled={lockout.locked || loading}
@@ -151,8 +173,17 @@ export default function AdminLogin() {
             </div>
 
             <div className="form-group">
-              <label className="form-label">Şifre</label>
-              <div style={{ position: 'relative' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label className="form-label" style={{ marginBottom: 0 }}>Şifre</label>
+                <button 
+                  type="button" 
+                  onClick={() => setShowForgot(true)}
+                  style={{ background: 'none', border: 'none', color: 'var(--primary)', fontSize: '0.75rem', cursor: 'pointer', padding: 0 }}
+                >
+                  Şifremi Unuttum
+                </button>
+              </div>
+              <div style={{ position: 'relative', marginTop: '0.5rem' }}>
                 <input
                   className="form-input"
                   type={showPassword ? 'text' : 'password'}
@@ -212,6 +243,43 @@ export default function AdminLogin() {
           </div>
         </div>
       </div>
+
+      {showForgot && (
+        <div className="modal-overlay" style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+          <div className="modal-content" style={{ background: 'var(--bg-card)', padding: '2rem', borderRadius: '12px', width: '100%', maxWidth: '400px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem' }}>Şifremi Unuttum</h2>
+            
+            {forgotSuccess && <div className="alert alert-success" style={{ marginBottom: '1rem' }}>✅ {forgotSuccess}</div>}
+            {forgotError && <div className="alert alert-error" style={{ marginBottom: '1rem' }}>⚠️ {forgotError}</div>}
+
+            <form onSubmit={handleForgotSubmit}>
+              <div className="form-group">
+                <label className="form-label">E-posta Adresiniz</label>
+                <input
+                  type="email"
+                  className="form-input"
+                  value={forgotEmail}
+                  onChange={e => setForgotEmail(e.target.value)}
+                  required
+                  placeholder="ornek@email.com"
+                />
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
+                  Size şifrenizi sıfırlayabileceğiniz güvenli bir bağlantı göndereceğiz.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+                <button type="button" className="btn btn-ghost" style={{ flex: 1 }} onClick={() => setShowForgot(false)}>
+                  İptal
+                </button>
+                <button type="submit" className="btn btn-primary" style={{ flex: 1 }} disabled={forgotLoading}>
+                  {forgotLoading ? 'Gönderiliyor...' : 'Bağlantı Gönder'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
