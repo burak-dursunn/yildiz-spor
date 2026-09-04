@@ -19,8 +19,8 @@ export default function PublicGallery() {
   return (
     <div className="page-wrapper" style={{ padding: '6rem 0' }}>
       <SEO 
-        title="Resim Galerisi | Ergani Yıldız Spor" 
-        description="Ergani Yıldız Spor kulübünün maçlarından, antrenmanlarından ve etkinliklerinden kareler." 
+        title="Resim Galerisi" 
+        description="Ergani Yıldız Spor kulübünün maçlarından, antrenmanlarından ve etkinliklerinden kareler. Takım fotoğrafları ve unutulmaz anlar." 
       />
       
       <div className="container">

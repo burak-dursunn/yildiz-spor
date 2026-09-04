@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getStandings, getMatches, getSetting } from '../lib/api'
+import SEO from '../components/SEO'
 
 function fmtDate(d) {
   if (!d) return '—'
@@ -37,6 +38,10 @@ export default function LeagueStandings() {
 
   return (
     <>
+      <SEO
+        title="Lig Puan Durumu"
+        description="Ergani Yıldız Spor'un mücadele ettiği ligdeki güncel puan durumu, maç sonuçları ve takım sıralaması."
+      />
       {/* Hero */}
       <section className="page-hero page-hero-sm">
         <div className="container page-hero-content">

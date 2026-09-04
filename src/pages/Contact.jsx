@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import SEO from '../components/SEO'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
@@ -32,6 +33,10 @@ export default function Contact() {
 
   return (
     <div className="page-content">
+      <SEO
+        title="İletişim"
+        description="Ergani Yıldız Spor Futbol Kulübü ile iletişime geçin. Adres: Ergani, Diyarbakır. Telefon: +90 533 810 46 61. Altyapı kayıt, antrenman bilgisi ve iş birliği teklifleriniz için."
+      />
       {/* Page Hero */}
       <section className="page-hero page-hero-sm">
         <div className="container">

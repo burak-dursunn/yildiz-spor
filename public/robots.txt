@@ -1,8 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /assets/
 
-# NOT: Yönetim paneli URL'i burada açıklanmaz.
-# Disallow: /admin/ gibi satırlar eklemek güvenliği azaltır —
-# arama motorlarına admin yolunu söylemiş olursunuz.
-
-Sitemap: https://yildiz-spor.vercel.app/sitemap.xml
+Sitemap: https://erganiyildizspor.com.tr/sitemap.xml

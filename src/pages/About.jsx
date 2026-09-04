@@ -13,21 +13,36 @@ export default function About() {
 
   return (
     <div className="page-content">
-      <SEO title="Hakkımızda" />
+      <SEO
+        title="Hakkımızda"
+        description="Ergani Yıldız Spor Futbol Kulübü'nün tarihçesi, misyonu ve vizyonu. 2009'dan bu yana Ergani, Diyarbakır'da futbol kültürünü geliştiren kulübümüzü tanıyın."
+      />
       {/* Page Hero */}
       <section className="page-hero">
         <div className="container">
-          <div className="page-hero-content animate-fadeInUp">
-            <div className="page-hero-badge">Kulübümüz</div>
-            <h1 className="heading-xl">
-              <span className="text-gradient">Ergani Yıldız Spor</span>
-            </h1>
-            <p className="page-hero-desc">
-              09.10.2009'dan bu yana Ergani'nin futbol temsilcisi, bölgenin gururu
-            </p>
-          </div>
-          <div className="page-hero-logo animate-fadeInUp" style={{ animationDelay: '0.2s', display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
-            <img src="/logo.png" alt="Ergani Yıldız Spor Logosu" style={{ width: '120px', height: 'auto', dropShadow: '0 4px 20px rgba(0,0,0,0.1)' }} />
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap' }}>
+            {/* Sol: Metin */}
+            <div className="page-hero-content animate-fadeInUp" style={{ flex: '1 1 auto' }}>
+              <div className="page-hero-badge">Kulübümüz</div>
+              <h1 className="heading-xl">
+                <span className="text-gradient">Ergani Yıldız Spor</span>
+              </h1>
+              <p className="page-hero-desc">
+                09.10.2009'dan bu yana Ergani'nin futbol temsilcisi, bölgenin gururu
+              </p>
+            </div>
+            {/* Sağ: Logo */}
+            <div className="animate-fadeInUp" style={{ animationDelay: '0.2s', flexShrink: 0 }}>
+              <img
+                src="/logo.png"
+                alt="Ergani Yıldız Spor Logosu"
+                style={{
+                  width: '180px',
+                  height: 'auto',
+                  filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.15))',
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className="page-hero-shape" />

@@ -2,19 +2,106 @@
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Ergani Yıldız Spor Futbol Kulübü - Resmi Web Sitesi. Haberler, duyurular ve kulüp hakkında bilgiler." />
-    <meta name="keywords" content="Ergani Yıldız Spor, futbol, kulüp, Ergani, Diyarbakır" />
-    <meta property="og:title" content="Ergani Yıldız Spor Futbol Kulübü" />
-    <meta property="og:description" content="Ergani'nin gururu, bölgenin yıldızı. Resmi kulüp web sitesi." />
+
+    <!-- ═══ Temel SEO ═══ -->
+    <title>Ergani Yıldız Spor Futbol Kulübü | Resmi Web Sitesi</title>
+    <meta name="description" content="Ergani Yıldız Spor Futbol Kulübü resmi web sitesi. 2009'dan bu yana Ergani, Diyarbakır'da futbol altyapısı, U-13 akademi, amatör lig maçları, kulüp haberleri ve duyuruları." />
+    <meta name="keywords" content="Ergani Yıldız Spor, Ergani Yıldızspor, Yıldız Spor Ergani, Ergani futbol, Ergani spor kulübü, Diyarbakır amatör lig, Ergani futbol kulübü, Ergani altyapı futbol, Ergani futbol akademisi, Yıldız Spor Diyarbakır, Ergani Yıldız Spor Futbol Kulübü" />
+    <meta name="author" content="Ergani Yıldız Spor Futbol Kulübü" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://erganiyildizspor.com.tr/" />
+
+    <!-- ═══ Favicon ═══ -->
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+
+    <!-- ═══ Open Graph (Facebook, WhatsApp, vb.) ═══ -->
     <meta property="og:type" content="website" />
-    <title>Ergani Yıldız Spor Futbol Kulübü</title>
+    <meta property="og:site_name" content="Ergani Yıldız Spor Futbol Kulübü" />
+    <meta property="og:title" content="Ergani Yıldız Spor Futbol Kulübü | Resmi Web Sitesi" />
+    <meta property="og:description" content="Ergani'nin gururu, bölgenin yıldızı. 2009'dan bu yana futbol altyapısı, amatör lig mücadelesi ve genç yetenek geliştirme." />
+    <meta property="og:url" content="https://erganiyildizspor.com.tr/" />
+    <meta property="og:image" content="https://erganiyildizspor.com.tr/logo.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Ergani Yıldız Spor Futbol Kulübü Logosu" />
+    <meta property="og:locale" content="tr_TR" />
+
+    <!-- ═══ Twitter Card ═══ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ergani Yıldız Spor Futbol Kulübü | Resmi Web Sitesi" />
+    <meta name="twitter:description" content="Ergani'nin gururu, bölgenin yıldızı. 2009'dan bu yana futbol altyapısı, amatör lig mücadelesi ve genç yetenek geliştirme." />
+    <meta name="twitter:image" content="https://erganiyildizspor.com.tr/logo.png" />
+
+    <!-- ═══ Ek SEO Meta ═══ -->
+    <meta name="geo.region" content="TR-21" />
+    <meta name="geo.placename" content="Ergani, Diyarbakır" />
+    <meta name="theme-color" content="#1a5c2e" />
+
+    <!-- ═══ JSON-LD Structured Data ═══ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsOrganization",
+      "name": "Ergani Yıldız Spor Futbol Kulübü",
+      "alternateName": ["Ergani Yıldızspor", "Yıldız Spor Ergani", "Ergani Yıldız Spor"],
+      "url": "https://erganiyildizspor.com.tr",
+      "logo": "https://erganiyildizspor.com.tr/logo.png",
+      "image": "https://erganiyildizspor.com.tr/logo.png",
+      "description": "Ergani Yıldız Spor Futbol Kulübü, 2009 yılında kurulmuş, Diyarbakır'ın Ergani ilçesinde faaliyet gösteren bir amatör futbol kulübüdür. Altyapı akademisi ve A Takım ile bölge futboluna katkı sağlamaktadır.",
+      "foundingDate": "2009-10-09",
+      "sport": "Futbol",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Ergani",
+        "addressRegion": "Diyarbakır",
+        "addressCountry": "TR"
+      },
+      "telephone": "+90-533-810-46-61",
+      "email": "mehmet_yesil7@hotmail.com",
+      "areaServed": {
+        "@type": "City",
+        "name": "Ergani"
+      },
+      "memberOf": {
+        "@type": "SportsOrganization",
+        "name": "Türkiye Futbol Federasyonu"
+      },
+      "keywords": "Ergani Yıldız Spor, Ergani futbol, Diyarbakır amatör lig, futbol altyapısı, genç futbolcu geliştirme"
+    }
+    </script>
+
+    <!-- ═══ Google Fonts ═══ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- ═══ Noscript Fallback — Google Bot İlk Geçişi İçin ═══ -->
+    <noscript>
+      <div style="max-width:800px;margin:2rem auto;padding:2rem;font-family:system-ui,sans-serif">
+        <h1>Ergani Yıldız Spor Futbol Kulübü</h1>
+        <p>Ergani Yıldız Spor, 2009 yılında Diyarbakır'ın Ergani ilçesinde kurulmuş bir amatör futbol kulübüdür. Altyapı akademisi ile genç futbolcuların gelişimine katkı sağlamakta, A Takım ile bölgesel liglerde mücadele etmektedir.</p>
+        <h2>Kulüp Hakkında</h2>
+        <p>Kuruluşundan bu yana 300'den fazla genç futbolcu yetiştiren kulübümüz, UEFA lisanslı antrenörler eşliğinde U-8, U-10, U-13, U-15 ve U-18 yaş kategorilerinde eğitim vermektedir.</p>
+        <h2>İletişim</h2>
+        <p>Adres: Ergani, Diyarbakır, Türkiye</p>
+        <p>Telefon: +90 533 810 46 61</p>
+        <p>E-posta: mehmet_yesil7@hotmail.com</p>
+        <nav>
+          <ul>
+            <li><a href="/">Ana Sayfa</a></li>
+            <li><a href="/hakkinda">Hakkımızda</a></li>
+            <li><a href="/haberler">Haberler</a></li>
+            <li><a href="/galeri">Galeri</a></li>
+            <li><a href="/lig-puan-durumu">Puan Durumu</a></li>
+            <li><a href="/iletisim">İletişim</a></li>
+          </ul>
+        </nav>
+      </div>
+    </noscript>
   </body>
 </html>

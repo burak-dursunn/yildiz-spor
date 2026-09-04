@@ -490,7 +490,14 @@ export default function Home() {
     <div className="home-page">
       <SEO
         title="Ana Sayfa"
-        description="Ergani Yıldız Spor Kulübü - Bölgenin Parlayan Yıldızı. Altyapı ve A Takım futbol faaliyetlerimiz."
+        description="Ergani Yıldız Spor Futbol Kulübü resmi web sitesi. 2009'dan bu yana Ergani, Diyarbakır'da futbol altyapısı, amatör lig maçları, kulüp haberleri ve genç yetenek geliştirme."
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Ergani Yıldız Spor Futbol Kulübü",
+          "url": "https://erganiyildizspor.com.tr",
+          "description": "Ergani Yıldız Spor Futbol Kulübü resmi web sitesi"
+        }}
       />
       {/* 1. Hero Slider — tam genişlik */}
       <section className="home-hero-wrap" style={{ paddingTop: 'var(--nav-height)' }}>

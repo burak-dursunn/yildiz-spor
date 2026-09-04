@@ -135,7 +135,22 @@ export function AuthProvider({ children }) {
 
   const sendPasswordResetOtp = async (email) => {
     if (USE_MOCK) return { error: null } // Mock success
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email)
+    
+    // redirectTo: E-postadaki linke tıklayınca kullanıcının gideceği URL.
+    //
+    // Akış: 
+    //   1. Kullanıcı linke tıklar → Supabase bu URL'ye yönlendirir (token hash'te)
+    //   2. React app yüklenir, Supabase client token'ı URL'den okur
+    //   3. PASSWORD_RECOVERY event'i fırlatılır → useAuth handler çalışır
+    //   4. Kullanıcı otomatik olarak hesap ayarlarına yönlendirilir
+    //
+    // window.location.origin her ortamda doğru domain'i döner:
+    //   Canlı  → https://erganiyildizspor.com.tr
+    //   Local  → http://localhost:5173
+    const adminPath = import.meta.env.VITE_ADMIN_PATH || '/admin'
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}${adminPath}/panel/ayarlar`,
+    })
     return { data, error }
   }
 
