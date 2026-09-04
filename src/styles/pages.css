@@ -393,6 +393,59 @@
   transform: translate(-1px, -1px);
 }
 
+.contact-item.whatsapp {
+  background: #25D366;
+  border-color: #128C7E;
+  border-left-color: #075E54;
+}
+.contact-item.whatsapp:hover {
+  background: #20BA59;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
+.contact-item.email {
+  background: #2563eb;
+  border-color: #1d4ed8;
+  border-left-color: #1e3a8a;
+}
+.contact-item.email:hover {
+  background: #1d4ed8;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.contact-item.address {
+  background: #475569;
+  border-color: #334155;
+  border-left-color: #1e293b;
+}
+.contact-item.address:hover {
+  background: #334155;
+  box-shadow: 0 4px 12px rgba(71, 85, 105, 0.4);
+}
+
+.contact-item.whatsapp .contact-label,
+.contact-item.whatsapp .contact-sub,
+.contact-item.email .contact-label,
+.contact-item.email .contact-sub,
+.contact-item.address .contact-label,
+.contact-item.address .contact-sub {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.contact-item.whatsapp .contact-value,
+.contact-item.email .contact-value,
+.contact-item.address .contact-value {
+  color: #ffffff;
+}
+
+.contact-item.whatsapp .contact-icon,
+.contact-item.email .contact-icon,
+.contact-item.address .contact-icon {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
 .contact-icon {
   font-size: 1.25rem;
   flex-shrink: 0;

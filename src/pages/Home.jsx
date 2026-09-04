@@ -229,17 +229,17 @@ function GallerySection() {
           <>
             <div className="news-featured-grid">
               {images.slice(0, 3).map(img => (
-                <img 
+                <img
                   key={img.id}
-                  src={img.image_url} 
-                  alt="Galeri Resmi" 
-                  style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} 
-                  loading="lazy" 
-                  decoding="async" 
+                  src={img.image_url}
+                  alt="Galeri Resmi"
+                  style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
+                  loading="lazy"
+                  decoding="async"
                 />
               ))}
             </div>
-            
+
             {images.length > 3 && (
               <div style={{ textAlign: 'center', marginTop: '2rem' }}>
                 <Link to="/galeri" className="btn btn-outline" style={{ padding: '0.75rem 2rem' }}>
@@ -295,27 +295,21 @@ function AgeCategories() {
   )
 }
 
-/* ─── Stats Bar ──────────────────────────────────────── */
-function StatsBar() {
+/* ─── Bouncing Balls Quote ──────────────────────────────────────── */
+function BouncingBallsQuote() {
   const [ref, visible] = useInView()
-  const stats = [
-    { value: '15+', label: 'Yıl Tecrübe' },
-    { value: '300+', label: 'Yetiştirilen Futbolcu' },
-    { value: '5', label: 'Altyapı Takımı' },
-    { value: '12+', label: 'Kupa & Derece' },
-    { value: '3', label: 'Lisanslı Antrenör' },
-  ]
 
   return (
-    <section ref={ref} className={`home-stats-bar ${visible ? 'in-view' : ''}`}>
-      <div className="container">
-        <div className="home-stats-row">
-          {stats.map((s, i) => (
-            <div key={s.label} className="home-stat-item" style={{ animationDelay: `${i * 0.1}s` }}>
-              <span className="home-stat-val">{s.value}</span>
-              <span className="home-stat-label">{s.label}</span>
-            </div>
-          ))}
+    <section ref={ref} className={`home-bouncing-quote ${visible ? 'in-view' : ''}`}>
+      <div className="bouncing-ball ball-1"><div className="bouncing-ball-inner">⚽</div></div>
+      <div className="bouncing-ball ball-2"><div className="bouncing-ball-inner">⚽</div></div>
+      <div className="bouncing-ball ball-3"><div className="bouncing-ball-inner">⚽</div></div>
+
+      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+        <div className="quote-content animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+          <h3 className="quote-text">
+            "Sahada gelişen çocuk, hayatta da güçlenir."
+          </h3>
         </div>
       </div>
     </section>
@@ -408,10 +402,10 @@ function ValuesSection() {
 
 /* ─── Trust Section (Veliler için) ──────────────────── */
 const TRUSTS = [
-  { icon: '🏅', title: 'Bölge Şampiyonluğu', desc: 'Diyarbakır Amatör Ligi birincilikleri ve bölgesel turnuva zaferleri.' },
-  { icon: '📋', title: 'Lisanslı Antrenörler', desc: 'Tüm antrenörlerimiz TFF tarafından onaylı lisanslara sahiptir.' },
-  { icon: '👨‍👩‍👧', title: 'Aile Odaklı Yaklaşım', desc: 'Veliler her gelişimi takip edebilir. Şeffaflık ve iletişim birincil prensibimiz.' },
-  { icon: '🩺', title: 'Sporcu Sağlığı', desc: 'Periyodik sağlık kontrolleri ve profesyonel spor sağlığı danışmanlığı.' },
+  { icon: '🏃', title: 'FİZİKSEL GELİŞİM', desc: 'Antrenmanlarımızla sporcularımızın yaşlarına uygun fiziksel gelişimlerini destekliyor, dayanıklılık, koordinasyon ve sportif becerilerini geliştiriyoruz.' },
+  { icon: '📋', title: 'LİSANSLI ANTRENÖRLER', desc: 'Tüm antrenörlerimiz TFF tarafından onaylı lisanslara sahiptir.' },
+  { icon: '👨‍👩‍👧', title: 'AİLE ODAKLI YAKLAŞIM', desc: 'Veliler her gelişimi takip edebilir. Şeffaflık ve iletişim birincil prensibimiz.' },
+  { icon: '🤝', title: 'KARAKTER GELİŞİMİ', desc: 'Futbolun yalnızca bireysel yetenekten ibaret olmadığını öğretiyoruz. Sorumluluk alarak özgüven kazanmayı, bencillikten uzaklaşarak takım çalışmasını, paylaşmayı ve fair-play ruhunu benimsemelerini destekliyoruz.' },
 ]
 
 function TrustSection() {
@@ -516,7 +510,7 @@ export default function Home() {
       <GallerySection />
 
       {/* 5. İstatistikler */}
-      <StatsBar />
+      <BouncingBallsQuote />
 
       {/* 6. Yaş Kategorileri */}
       <AgeCategories />

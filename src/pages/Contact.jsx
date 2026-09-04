@@ -26,9 +26,9 @@ export default function Contact() {
   }
 
   const contactInfo = [
-    { icon: '📍', label: 'Adres', value: 'Ergani, Diyarbakır', sub: 'Türkiye' },
-    { icon: '📞', label: 'Telefon', value: '+90 533 810 46 61', sub: 'Hafta içi 09:00 - 18:00' },
-    { icon: '✉️', label: 'E-posta', value: 'mehmet_yesil7@hotmail.com', sub: 'Yanıt süresi 24-48 saat' },
+    { icon: '📍', label: 'Adres', value: 'Ergani, Diyarbakır', sub: 'Türkiye', type: 'address' },
+    { icon: '📞', label: 'Telefon', value: '+90 533 810 46 61', sub: 'Hafta içi 09:00 - 18:00', type: 'whatsapp' },
+    { icon: '✉️', label: 'E-posta', value: 'mehmet_yesil7@hotmail.com', sub: 'Yanıt süresi 24-48 saat', type: 'email' },
   ]
 
   return (
@@ -62,8 +62,8 @@ export default function Contact() {
                 İletişim <span className="text-gradient">Bilgileri</span>
               </h2>
 
-              {contactInfo.map(({ icon, label, value, sub }) => (
-                <div key={label} className="contact-item">
+              {contactInfo.map(({ icon, label, value, sub, type }) => (
+                <div key={label} className={`contact-item ${type || ''}`}>
                   <div className="contact-icon">{icon}</div>
                   <div>
                     <p className="contact-label">{label}</p>

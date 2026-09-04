@@ -350,47 +350,69 @@
   box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
 }
 
-/* ─── STATS BAR ──────────────────────────────────────── */
-.home-stats-bar {
+/* ─── BOUNCING BALLS QUOTE ───────────────────────────── */
+.home-bouncing-quote {
   background: var(--primary);
-  padding: 3rem 0;
-}
-
-.home-stats-row {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-.home-stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 2.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
   text-align: center;
-  animation: fadeInUp 0.5s ease forwards;
+}
+
+.quote-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
   opacity: 0;
 }
 
-.home-stats-bar.in-view .home-stat-item {
-  animation-play-state: running;
+.home-bouncing-quote.in-view .quote-content {
+  animation: fadeInUp 0.8s ease forwards;
 }
 
-.home-stat-val {
-  font-family: 'Oswald', sans-serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
+.quote-text {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 500;
   color: #fff;
-  line-height: 1;
+  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: 0;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.home-stat-label {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.65);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 0.375rem;
+
+
+/* Bouncing balls background */
+.bouncing-ball {
+  position: absolute;
+  opacity: 0.15;
+  z-index: 1;
+  animation: moveRight 20s infinite linear;
+}
+
+.bouncing-ball-inner {
+  display: inline-block;
+  animation: bounceAndSpin 2s infinite alternate ease-in-out;
+}
+
+.ball-1 { top: 10%; font-size: 3rem; animation-duration: 25s; animation-delay: -5s; }
+.ball-1 .bouncing-ball-inner { animation-duration: 1.5s; }
+
+.ball-2 { top: 40%; font-size: 5rem; animation-duration: 20s; animation-delay: -12s; opacity: 0.08; }
+.ball-2 .bouncing-ball-inner { animation-duration: 2.2s; }
+
+.ball-3 { top: 70%; font-size: 2.5rem; animation-duration: 18s; animation-delay: -2s; }
+.ball-3 .bouncing-ball-inner { animation-duration: 1.8s; }
+
+@keyframes moveRight {
+  from { left: -10%; }
+  to { left: 110%; }
+}
+
+@keyframes bounceAndSpin {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(-40px) rotate(180deg); }
 }
 
 @keyframes fadeInUp {
