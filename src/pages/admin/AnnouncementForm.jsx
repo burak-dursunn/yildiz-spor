@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import {
-  createAnnouncement, updateAnnouncement, adminGetAnnouncement,
+  createAnnouncement, updateAnnouncement, adminGetAnnouncement, deleteAnnouncement,
   uploadImage, deleteImage, addGalleryImage, deleteGalleryImage
 } from '../../lib/api'
 import { ANNOUNCEMENT_TYPES, getPublicUrl } from '../../lib/supabase'
@@ -248,6 +248,25 @@ export default function AnnouncementForm() {
     }
   }
 
+  const handleDelete = async () => {
+    if (!window.confirm('Bu duyuruyu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!')) {
+      return
+    }
+    
+    setSaving(true)
+    setError('')
+    
+    const { error } = await deleteAnnouncement(id)
+    
+    if (error) {
+      setError('Silme işlemi başarısız: ' + error.message)
+      setSaving(false)
+    } else {
+      // Başarıyla silindi, listeye geri dön
+      navigate(ADMIN?.haberler, { replace: true })
+    }
+  }
+
   if (loading) {
     return (
       <AdminLayout>
@@ -401,6 +420,18 @@ export default function AnnouncementForm() {
                 >
                   + Yeni Duyuru
                 </a>
+
+                {isEditing && (
+                  <button
+                    type="button"
+                    onClick={handleDelete}
+                    disabled={saving}
+                    className="btn btn-ghost"
+                    style={{ width: '100%', justifyContent: 'center', color: '#ef4444', borderColor: '#ef4444', marginTop: '0.5rem' }}
+                  >
+                    🗑️ Bu Duyuruyu Sil
+                  </button>
+                )}
               </div>
             </div>
 
