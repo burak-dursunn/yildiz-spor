@@ -169,11 +169,67 @@ export async function updateAnnouncement(id, formData) {
   return { data, error }
 }
 
+// URL'den storage path'ini çıkarma yardımcı fonksiyonu (örn: https://.../public/announcement-images/2026/resim.webp -> 2026/resim.webp)
+function extractPathFromUrl(url) {
+  if (!url) return null
+  const parts = url.split(`${STORAGE_BUCKET}/`)
+  return parts.length > 1 ? parts[1] : null
+}
+
 // Duyuru sil
 export async function deleteAnnouncement(id) {
   if (USE_MOCK) return mockDeleteAnnouncement(id)
-  const { error } = await supabase.from('announcements').delete().eq('id', id)
-  return { error }
+
+  try {
+    // 1. Önce silinecek duyuruyu ve ana resmini al
+    const { data: announcement } = await supabase
+      .from('announcements')
+      .select('cover_image')
+      .eq('id', id)
+      .single()
+
+    // 2. Bu duyuruya ait tüm galeri resimlerini al
+    const { data: galleryItems } = await supabase
+      .from('announcement_gallery')
+      .select('image_url')
+      .eq('announcement_id', id)
+
+    // 3. Tüm URL'leri topla ve Storage yoluna (path) dönüştür
+    const pathsToDelete = []
+    
+    if (announcement?.cover_image) {
+      const path = extractPathFromUrl(announcement.cover_image)
+      if (path) pathsToDelete.push(path)
+    }
+
+    if (galleryItems && galleryItems.length > 0) {
+      galleryItems.forEach(item => {
+        const path = extractPathFromUrl(item.image_url)
+        if (path) pathsToDelete.push(path)
+      })
+    }
+
+    // 4. Storage'dan (Storage Bucket) dosyaları sil
+    if (pathsToDelete.length > 0) {
+      const { error: storageError } = await supabase.storage
+        .from(STORAGE_BUCKET)
+        .remove(pathsToDelete)
+        
+      if (storageError) console.error('Resimler storage alanından silinirken hata oluştu:', storageError)
+    }
+
+    // 5. En son veritabanından (Database) duyuruyu sil
+    // (Galeri verileri veritabanında cascade ayarlıdır, o yüzden otomatik silinecektir)
+    const { error: dbError } = await supabase
+      .from('announcements')
+      .delete()
+      .eq('id', id)
+
+    return { error: dbError }
+  } catch (error) {
+    console.error('Silme işlemi hatası:', error)
+    return { error }
+  }
 }
 
 // Galeri fotoğrafı ekle
