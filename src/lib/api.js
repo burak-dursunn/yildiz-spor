@@ -1,5 +1,6 @@
 import { supabase, getPublicUrl, STORAGE_BUCKET } from '../lib/supabase'
 import { v4 as uuidv4 } from 'uuid'
+import { convertToWebP } from './imageUtils'
 import {
   isSupabaseConfigured,
   mockGetAnnouncements,
@@ -97,17 +98,24 @@ export async function adminGetAnnouncement(id) {
   return { data, error }
 }
 
-// Görsel yükleme
+// Görsel yükleme — WebP'ye çevirerek yükle
 export async function uploadImage(file) {
   if (USE_MOCK) return mockUploadImage(file)
 
-  const ext = file.name.split('.').pop()
-  const fileName = `${uuidv4()}.${ext}`
+  // Upload öncesi WebP dönüşümü (tarayıcıda, sıfır maliyet)
+  // Başarısız olursa orijinal dosyayı kullanır
+  const optimizedFile = await convertToWebP(file)
+
+  const fileName = `${uuidv4()}.webp`
   const filePath = `${new Date().getFullYear()}/${fileName}`
 
   const { data, error } = await supabase.storage
     .from(STORAGE_BUCKET)
-    .upload(filePath, file, { cacheControl: '3600', upsert: false })
+    .upload(filePath, optimizedFile, {
+      cacheControl: '31536000', // 1 yıl cache — WebP sabit, değişmez
+      upsert: false,
+      contentType: 'image/webp',
+    })
 
   if (error) return { data: null, error }
   return { data: { path: data.path, publicUrl: getPublicUrl(data.path) }, error: null }

@@ -172,7 +172,7 @@ export default function Gallery() {
             {uploading ? uploadProgress : '+ Fotoğraf Yükle'}
             <input 
               type="file" 
-              accept="image/*" 
+              accept="image/jpeg,image/png,image/webp,image/gif"
               multiple
               onChange={handleFileChange} 
               disabled={uploading || saving}
