@@ -46,7 +46,7 @@ export default function Dashboard() {
       </div>
 
       {/* Stats */}
-      <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
+      <div className="stats-grid hidden-on-mobile" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
         <div className="stat-card" style={{ borderColor: 'var(--primary)' }}>
           <div className="stat-icon" style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8' }}>👥</div>
           <div className="stat-value">{visits.today}</div>
@@ -80,7 +80,7 @@ export default function Dashboard() {
       </div>
 
       {/* Type Distribution */}
-      <div className="data-table-wrapper" style={{ marginBottom: '1.5rem' }}>
+      <div className="data-table-wrapper hidden-on-mobile" style={{ marginBottom: '1.5rem' }}>
         <div className="data-table-header">
           <h3 className="heading-sm">Türlere Göre Dağılım</h3>
         </div>

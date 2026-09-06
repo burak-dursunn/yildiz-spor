@@ -5,7 +5,7 @@ import { adminGetAnnouncements } from '../../lib/api'
 import { ANNOUNCEMENT_TYPES } from '../../lib/supabase'
 import { ADMIN } from '../../lib/adminConfig'
 
-function AdminSidebar({ announcements }) {
+function AdminSidebar({ announcements, isOpen }) {
   const { user, signOut } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
@@ -25,7 +25,7 @@ function AdminSidebar({ announcements }) {
   })
 
   return (
-    <aside className="admin-sidebar">
+    <aside className={`admin-sidebar ${isOpen ? 'open' : ''}`}>
       <p className="sidebar-section-title">Yönetim</p>
       <nav>
         <ul className="sidebar-nav">
@@ -160,25 +160,39 @@ function AdminSidebar({ announcements }) {
 
 export default function AdminLayout({ children }) {
   const [announcements, setAnnouncements] = useState([])
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     adminGetAnnouncements().then(({ data }) => setAnnouncements(data || []))
   }, [])
+
+  // Close sidebar on route change
+  useEffect(() => {
+    setIsSidebarOpen(false)
+  }, [location.pathname])
 
   return (
     <div className="admin-layout">
       {/* Topbar */}
       <div className="admin-topbar">
         <span className="admin-topbar-title" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <img src="/logo.png" alt="Ergani Yıldız Spor Logo" style={{ height: '36px', objectFit: 'contain' }} />
-          Ergani Yıldız Spor — Yönetim Paneli
+          <button 
+            className="admin-topbar-menu-btn" 
+            onClick={() => setIsSidebarOpen(true)}
+          >
+            ☰
+          </button>
+          <img src="/logo.png" alt="Ergani Yıldız Spor Logo" style={{ height: '48px', objectFit: 'contain' }} />
+          <span className="hidden-on-mobile">Ergani Yıldız Spor — Yönetim Paneli</span>
         </span>
         <Link to={ADMIN?.haberlerYeni} className="btn btn-primary btn-sm">
           + Yeni Duyuru
         </Link>
       </div>
 
-      <AdminSidebar announcements={announcements} />
+      <div className={`admin-sidebar-overlay ${isSidebarOpen ? 'open' : ''}`} onClick={() => setIsSidebarOpen(false)}></div>
+      <AdminSidebar announcements={announcements} isOpen={isSidebarOpen} />
 
       <main className="admin-main">
         {children}

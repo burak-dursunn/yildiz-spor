@@ -120,11 +120,7 @@ export default function AdminLogin() {
         <div className="admin-login-card">
           <div className="admin-login-logo">
             <div className="shield-icon">
-              <svg width="64" height="64" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 2L4 9v14c0 10 7.5 19.3 18 22 10.5-2.7 18-12 18-22V9L22 2z" fill="#0d3d14" stroke="#22a135" strokeWidth="1.5"/>
-                <path d="M22 7L8 13v10c0 7.5 5.5 14.3 14 16.5C30.5 37.3 36 30.5 36 23V13L22 7z" fill="#1a5c25"/>
-                <path d="M22 12l1.8 5.5H29l-4.6 3.3 1.8 5.5L22 23l-4.2 3.3 1.8-5.5L15 17.5h5.2L22 12z" fill="#f5c518"/>
-              </svg>
+              <img src="/logo.png" alt="Ergani Yıldız Spor Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <h1 className="heading-sm">Yönetim Girişi</h1>
             <p>Ergani Yıldız Spor</p>
