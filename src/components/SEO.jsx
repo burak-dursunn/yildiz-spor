@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
 const SITE_NAME = 'Ergani Yıldız Spor Futbol Kulübü';
-const SITE_URL = 'https://erganiyildizspor.com.tr';
+const SITE_URL = 'https://www.erganiyildizspor.com.tr';
 const DEFAULT_DESCRIPTION =
   'Ergani Yıldız Spor Futbol Kulübü resmi web sitesi. 2009\'dan bu yana Ergani, Diyarbakır\'da futbol altyapısı, amatör lig maçları, kulüp haberleri ve duyuruları.';
 const DEFAULT_IMAGE = `${SITE_URL}/logo.png`;
