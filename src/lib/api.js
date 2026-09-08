@@ -170,7 +170,7 @@ export async function updateAnnouncement(id, formData) {
 }
 
 // URL'den storage path'ini çıkarma yardımcı fonksiyonu (örn: https://.../public/announcement-images/2026/resim.webp -> 2026/resim.webp)
-function extractPathFromUrl(url) {
+export function extractPathFromUrl(url) {
   if (!url) return null
   const parts = url.split(`${STORAGE_BUCKET}/`)
   return parts.length > 1 ? parts[1] : null
@@ -488,6 +488,27 @@ export async function addClubGalleryImage(imageUrl, category = 'u-13') {
 }
 
 export async function removeClubGalleryImage(id) {
+  if (USE_MOCK) {
+    const { error } = await supabase.from('gallery').delete().eq('id', id)
+    return { error }
+  }
+
+  // 1. Önce silinecek resmin URL'sini al
+  const { data: image } = await supabase
+    .from('gallery')
+    .select('image_url')
+    .eq('id', id)
+    .single()
+
+  // 2. Eğer URL varsa ve Supabase Storage içindeyse, fiziksel dosyayı da sil
+  if (image?.image_url) {
+    const path = extractPathFromUrl(image.image_url)
+    if (path) {
+      await supabase.storage.from(STORAGE_BUCKET).remove([path])
+    }
+  }
+
+  // 3. Veritabanından (gallery tablosundan) kaydı sil
   const { error } = await supabase
     .from('gallery')
     .delete()

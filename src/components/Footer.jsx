@@ -75,7 +75,7 @@ export default function Footer() {
             © {currentYear} Ergani Yıldız Spor Futbol Kulübü. Tüm hakları saklıdır.
           </p>
           <div className="footer-badge">
-            Yeşil-Sarı Renklerimizle <span>⭐</span> Gurururuz
+            Mavi Siyah Beyaz Renklerimizle <span>⭐</span> Gurururuz
           </div>
         </div>
       </div>

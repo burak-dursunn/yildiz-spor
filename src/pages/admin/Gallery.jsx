@@ -70,7 +70,7 @@ export default function Gallery() {
     }
     
     if (newUploads.length > 0) {
-      setImages(prev => [...prev, ...newUploads])
+      setImages(prev => [...newUploads, ...prev])
       setUnsavedChanges(true)
     }
     
@@ -87,6 +87,18 @@ export default function Gallery() {
     // Sadece daha önceden veritabanında olanları silinecekler listesine ekle
     if (!String(id).startsWith('temp-')) {
       setDeletedIds(prev => [...prev, id])
+    } else {
+      // Eğer temp- (henüz DB'ye kaydedilmemiş) ise, bu dosya çoktan Storage'a yüklendi.
+      // Boşuna yer kaplamaması için hemen Storage'dan silelim.
+      const imageObj = images.find(img => img.id === id)
+      if (imageObj && imageObj.image_url) {
+        import('../../lib/api').then(({ deleteImage, extractPathFromUrl }) => {
+          const path = extractPathFromUrl(imageObj.image_url)
+          if (path) {
+            deleteImage(path)
+          }
+        })
+      }
     }
     
     setUnsavedChanges(true)
