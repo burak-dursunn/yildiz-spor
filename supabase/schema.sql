@@ -257,6 +257,7 @@ create table if not exists page_views (
   id          uuid default gen_random_uuid() primary key,
   date        date not null default current_date,
   path        text,
+  ip_address  text,
   created_at  timestamptz default now()
 );
 

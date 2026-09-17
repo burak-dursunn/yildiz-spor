@@ -322,11 +322,25 @@ function loadVisits() {
 }
 function saveVisits(items) { localStorage.setItem(VISITS_KEY, JSON.stringify(items)) }
 
-export function mockRecordVisit() {
+export async function mockRecordVisit() {
   const visits = loadVisits()
   const today = new Date().toISOString().slice(0, 10)
-  visits.push({ date: today, timestamp: Date.now() })
-  saveVisits(visits)
+  
+  let ipAddress = 'unknown'
+  try {
+    const ipRes = await fetch('https://api.ipify.org?format=json')
+    const ipData = await ipRes.json()
+    ipAddress = ipData.ip
+  } catch (err) {}
+
+  // Bugün bu IP ile zaten ziyaret edildiyse kaydetme (Mock davranışı)
+  const hasVisited = visits.some(v => v.date === today && v.ip_address === ipAddress && ipAddress !== 'unknown')
+  
+  if (!hasVisited) {
+    visits.push({ date: today, timestamp: Date.now(), ip_address: ipAddress })
+    saveVisits(visits)
+  }
+  
   return { data: null, error: null }
 }
 
@@ -335,15 +349,32 @@ export function mockGetVisitStats() {
   const now = new Date()
   const todayStr = now.toISOString().slice(0, 10)
   
+  const getUniqueCountByDay = (views) => {
+    const uniqueVisits = new Set()
+    let unknownCount = 0
+    views.forEach(v => {
+      if (v.ip_address && v.ip_address !== 'unknown') {
+        uniqueVisits.add(`${v.date}-${v.ip_address}`)
+      } else {
+        unknownCount++
+      }
+    })
+    return uniqueVisits.size + unknownCount
+  }
+  
   // Bugünü hesapla
-  const todayVisits = visits.filter(v => v.date === todayStr).length
+  const todayViews = visits.filter(v => v.date === todayStr)
+  const todayVisits = getUniqueCountByDay(todayViews)
   
   // Bu haftayı hesapla (son 7 gün)
   const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-  const weeklyVisits = visits.filter(v => new Date(v.timestamp) >= oneWeekAgo).length
+  const weeklyViews = visits.filter(v => new Date(v.timestamp) >= oneWeekAgo)
+  const weeklyVisits = getUniqueCountByDay(weeklyViews)
+  
+  const totalVisits = getUniqueCountByDay(visits)
   
   return {
-    data: { today: todayVisits, weekly: weeklyVisits, total: visits.length },
+    data: { today: todayVisits, weekly: weeklyVisits, total: totalVisits },
     error: null
   }
 }

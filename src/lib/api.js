@@ -432,11 +432,32 @@ export async function getStandings() {
 export async function recordVisit() {
   if (USE_MOCK) return mockRecordVisit()
   
-  // Gerçek Supabase'de tablo eklenecek:
-  const today = new Date().toISOString().slice(0, 10)
+  const todayStr = new Date().toISOString().slice(0, 10)
+  
+  // Önce aynı gün için IP/tarayıcı kontrolünü localStorage ile yapalım (API isteklerini azaltmak için)
+  const lastVisitDate = localStorage.getItem('lastVisitDate')
+  if (lastVisitDate === todayStr) {
+    return { data: null, error: null }
+  }
+
+  // IP adresini al
+  let ipAddress = 'unknown'
+  try {
+    const ipRes = await fetch('https://api.ipify.org?format=json')
+    const ipData = await ipRes.json()
+    ipAddress = ipData.ip
+  } catch (err) {
+    console.warn('IP alınamadı:', err)
+  }
+
+  // Gerçek Supabase'de tablo eklenecek (ip_address kolonu ile)
   const { data, error } = await supabase
     .from('page_views')
-    .insert({ date: today, path: window.location.pathname })
+    .insert({ date: todayStr, path: window.location.pathname, ip_address: ipAddress })
+  
+  if (!error) {
+    localStorage.setItem('lastVisitDate', todayStr)
+  }
   return { data, error }
 }
 
@@ -446,18 +467,38 @@ export async function getVisitStats() {
   
   // Supabase tarafında özel bir RPC (Remote Procedure Call) veya view ile çözülebilir.
   // Şimdilik basitçe tümünü çekip gruplayacağız. (Performans için DB'de çözülmeli)
-  const { data, error } = await supabase.from('page_views').select('date, created_at')
+  const { data, error } = await supabase.from('page_views').select('date, created_at, ip_address')
   if (error) return { data: null, error }
   
   const now = new Date()
   const todayStr = now.toISOString().slice(0, 10)
-  const todayVisits = data.filter(v => v.date === todayStr).length
+  
+  // Benzersiz IP hesaplama fonksiyonu (aynı gün içindeki aynı IP'leri 1 sayar)
+  const getUniqueCountByDay = (views) => {
+    const uniqueVisits = new Set()
+    let unknownCount = 0
+    
+    views.forEach(v => {
+      if (v.ip_address && v.ip_address !== 'unknown') {
+        uniqueVisits.add(`${v.date}-${v.ip_address}`)
+      } else {
+        unknownCount++
+      }
+    })
+    return uniqueVisits.size + unknownCount
+  }
+  
+  const todayViews = data.filter(v => v.date === todayStr)
+  const todayVisits = getUniqueCountByDay(todayViews)
   
   const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-  const weeklyVisits = data.filter(v => new Date(v.created_at) >= oneWeekAgo).length
+  const weeklyViews = data.filter(v => new Date(v.created_at) >= oneWeekAgo)
+  const weeklyVisits = getUniqueCountByDay(weeklyViews)
+  
+  const totalVisits = getUniqueCountByDay(data)
   
   return { 
-    data: { today: todayVisits, weekly: weeklyVisits, total: data.length },
+    data: { today: todayVisits, weekly: weeklyVisits, total: totalVisits },
     error: null 
   }
 }
