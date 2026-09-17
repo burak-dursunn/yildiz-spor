@@ -1,4 +1,22 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "erganiyildizspor.com.tr" }],
+      "destination": "https://www.erganiyildizspor.com.tr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/hakk%C4%B1nda",
+      "destination": "/hakkinda",
+      "permanent": true
+    },
+    {
+      "source": "/hakkında",
+      "destination": "/hakkinda",
+      "permanent": true
+    }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "headers": [
     {

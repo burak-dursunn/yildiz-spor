@@ -39,8 +39,12 @@ export default function SEO({
     ? `${title} | ${SITE_NAME}`
     : `${SITE_NAME} | Resmi Web Sitesi`;
   const finalDescription = description || DEFAULT_DESCRIPTION;
-  const finalImage = image || DEFAULT_IMAGE;
-  const canonicalUrl = `${SITE_URL}${location.pathname}`;
+  const finalImage = image
+    ? (image.startsWith('http') ? image : `${SITE_URL}${image}`)
+    : DEFAULT_IMAGE;
+  // encodeURI: Türkçe karakterleri veya boşlukları encode ederek
+  // Google'ın canonical'ı doğru tanımasını sağlar.
+  const canonicalUrl = `${SITE_URL}${encodeURI(location.pathname)}`;
 
   return (
     <Helmet>

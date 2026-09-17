@@ -240,13 +240,11 @@ function GallerySection() {
               ))}
             </div>
 
-            {images.length > 3 && (
-              <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                <Link to="/galeri" className="btn btn-outline" style={{ padding: '0.75rem 2rem' }}>
-                  Tüm Galeriyi Gör
-                </Link>
-              </div>
-            )}
+            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+              <Link to="/galeri" className="btn btn-outline" style={{ padding: '0.75rem 2rem' }}>
+                Tüm Galeriyi Gör
+              </Link>
+            </div>
           </>
         )}
       </div>

@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
 
-Sitemap: https://erganiyildizspor.com.tr/sitemap.xml
+Sitemap: https://www.erganiyildizspor.com.tr/sitemap.xml
