@@ -8,27 +8,24 @@ import SEO from '../components/SEO'
 const altyapiImg = '/yıldızspor altyapı.jpg'
 
 const SLIDER_SLIDES = [
-  {
-    id: 1,
-    image: '/E.Yıldız Spor Takım Kadrosu-1.jpeg',
-    title: 'Ergani Yıldız Spor',
-    subtitle: "Ergani'nin Gururu, Bölgenin Yıldızı",
-    badge: '⚽ Sezon 2024-25',
-  },
-  {
-    id: 2,
-    image: '/E.Yıldız Spor Takım Kadrosu-2.jpeg',
-    title: 'Antrenmanda Kararlılık',
-    subtitle: 'Her antrenman bir adım daha ileri. Takımımız en iyisi için çalışıyor.',
-    badge: '🏃 Antrenman',
-  },
-  {
-    id: 3,
-    image: '/E.Yıldız Spor Takım Kadrosu-3.jpg',
-    title: 'Zafer Bizimle',
-    subtitle: 'Taraftarlarımızla birlikte her maçı kazanmak için sahadayız.',
-    badge: '🏆 Şampiyonluk',
-  },
+  { id: 1, image: '/slider-pictures/sampiyonluk-yolu.webp' },
+  { id: 2, image: '/slider-pictures/gelecegin-yildizlari.webp' },
+  { id: 3, image: '/slider-pictures/takim-ruhu.webp' },
+  { id: 4, image: '/slider-pictures/disiplin-ve-azim.webp' },
+  { id: 5, image: '/slider-pictures/ergani-yildiz-spor.webp' },
+  { id: 6, image: '/slider-pictures/yeni-sezon-yeni-umutlar.webp' },
+  { id: 7, image: '/slider-pictures/sahada-mucadele.webp' },
+  { id: 8, image: '/slider-pictures/sporla-buyuyen-nesiller.webp' },
+  { id: 9, image: '/slider-pictures/basari-bizim-isimiz.webp' },
+  { id: 10, image: '/slider-pictures/seyirciyle-butunlesen-takim.webp' },
+  { id: 11, image: '/slider-pictures/her-mac-bir-final.webp' },
+  { id: 12, image: '/slider-pictures/altyapi-guvencesi.webp' },
+  { id: 13, image: '/slider-pictures/teknik-ve-taktik.webp' },
+  { id: 14, image: '/slider-pictures/spor-ahlaki.webp' },
+  { id: 15, image: '/slider-pictures/dayaniklilik.webp' },
+  { id: 16, image: '/slider-pictures/hizli-hucum.webp' },
+  { id: 17, image: '/slider-pictures/kati-savunma.webp' },
+  { id: 18, image: '/slider-pictures/kazanan-takim.webp' },
 ]
 
 /* ─── Scroll reveal hook ─────────────────────────────── */
