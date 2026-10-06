@@ -32,6 +32,15 @@ create table if not exists announcement_gallery (
   created_at      timestamptz default now()
 );
 
+-- Ana sayfa hero slider görselleri
+create table if not exists home_slider_images (
+  id          uuid default gen_random_uuid() primary key,
+  image_url   text not null,
+  order_index integer not null default 0,
+  created_at  timestamptz default now()
+);
+create index if not exists idx_home_slider_order on home_slider_images(order_index);
+
 -- Updated_at otomatik güncelleme
 create or replace function update_updated_at()
 returns trigger as $$
@@ -57,6 +66,7 @@ create index if not exists idx_gallery_announcement_id on announcement_gallery(a
 
 alter table announcements enable row level security;
 alter table announcement_gallery enable row level security;
+alter table home_slider_images enable row level security;
 
 -- Herkese açık okuma (sadece yayınlanmış duyurular)
 create policy "Public read published announcements"
@@ -77,6 +87,13 @@ create policy "Public read gallery"
 -- Galeri: sadece authenticated admin
 create policy "Admin full access gallery"
   on announcement_gallery for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+
+create policy "Public read home slider"
+  on home_slider_images for select using (true);
+create policy "Admin full access home slider"
+  on home_slider_images for all
   using (auth.role() = 'authenticated')
   with check (auth.role() = 'authenticated');
 

@@ -27,6 +27,7 @@ import LeaguePanel from './pages/admin/LeaguePanel'
 import LeagueMatchForm from './pages/admin/LeagueMatchForm'
 import LeagueTeams from './pages/admin/LeagueTeams'
 import Gallery from './pages/admin/Gallery'
+import SliderManager from './pages/admin/SliderManager'
 import AccountSettings from './pages/admin/AccountSettings'
 
 import './styles/globals.css'
@@ -92,6 +93,9 @@ export default function App() {
                 : null}
               {ADMIN_ENABLED && ADMIN
                 ? <Route path={ADMIN.galeri} element={<ProtectedRoute><Gallery /></ProtectedRoute>} />
+                : null}
+              {ADMIN_ENABLED && ADMIN
+                ? <Route path={ADMIN.slider} element={<ProtectedRoute><SliderManager /></ProtectedRoute>} />
                 : null}
               {ADMIN_ENABLED && ADMIN
                 ? <Route path={ADMIN.ayarlar} element={<ProtectedRoute><AccountSettings /></ProtectedRoute>} />

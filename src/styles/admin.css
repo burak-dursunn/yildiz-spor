@@ -695,3 +695,8 @@ input:checked + .toggle-slider::before {
 @media (max-width: 480px) {
   .stats-grid { grid-template-columns: 1fr; }
 }
+
+.slider-admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+.slider-admin-card { overflow: hidden; border: 1px solid var(--border, #e5e7eb); border-radius: 12px; background: var(--surface, #fff); }
+.slider-admin-card > img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.slider-admin-card-footer { display: flex; align-items: center; justify-content: space-between; padding: .75rem; }

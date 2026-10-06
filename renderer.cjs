@@ -28,6 +28,7 @@ async function run() {
     console.log(`Starting Puppeteer renderer for URL: ${URL}`);
 
     const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/chromium-browser',
         headless: 'new',
         args: [
             '--hide-scrollbars',

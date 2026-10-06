@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { getLatestAnnouncements, getClubGalleryImages } from '../lib/api'
+import { getLatestAnnouncements, getClubGalleryImages, getHomeSliderImages } from '../lib/api'
 import NewsCard from '../components/NewsCard'
 import HeroSlider from '../components/HeroSlider'
 import SEO from '../components/SEO'
@@ -466,9 +466,13 @@ function JoinCTASection() {
 /* ─── HOME PAGE ──────────────────────────────────────── */
 export default function Home() {
   const [announcements, setAnnouncements] = useState([])
+  const [sliderSlides, setSliderSlides] = useState(SLIDER_SLIDES)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    getHomeSliderImages().then(({ data, error }) => {
+      if (!error) setSliderSlides((data || []).map(item => ({ id: item.id, image: item.image_url })))
+    })
     getLatestAnnouncements(3).then(({ data }) => {
       setAnnouncements(data || [])
       setLoading(false)
@@ -490,7 +494,7 @@ export default function Home() {
       />
       {/* 1. Hero Slider — tam genişlik */}
       <section className="home-hero-wrap" style={{ paddingTop: 'var(--nav-height)' }}>
-        <HeroSlider slides={SLIDER_SLIDES} />
+        <HeroSlider slides={sliderSlides} />
       </section>
 
       {/* 2. Son Haberler — slider'ın hemen altında */}

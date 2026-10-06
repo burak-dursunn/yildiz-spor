@@ -66,6 +66,11 @@ function AdminSidebar({ announcements, isOpen }) {
               Galeri Yönetimi
             </Link>
           </li>
+          <li>
+            <Link to={ADMIN?.slider} className={`sidebar-link ${isActive(ADMIN?.slider) ? 'active' : ''}`}>
+              <span className="icon">🎞️</span> Ana Sayfa Sliderı
+            </Link>
+          </li>
         </ul>
       </nav>
 

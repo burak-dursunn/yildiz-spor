@@ -145,6 +145,22 @@ export function isSupabaseConfigured() {
 
 const TEAMS_KEY   = 'eys_teams'
 const MATCHES_KEY = 'eys_matches'
+const SLIDER_KEY = 'eys_home_slider'
+export function mockGetSliderImages() {
+  try { return { data: JSON.parse(localStorage.getItem(SLIDER_KEY) || '[]'), error: null } }
+  catch { return { data: [], error: null } }
+}
+export function mockAddSliderImage(imageUrl) {
+  const { data } = mockGetSliderImages()
+  const item = { id: generateId(), image_url: imageUrl, order_index: data.length }
+  localStorage.setItem(SLIDER_KEY, JSON.stringify([...data, item]))
+  return { data: item, error: null }
+}
+export function mockDeleteSliderImage(id) {
+  const { data } = mockGetSliderImages()
+  localStorage.setItem(SLIDER_KEY, JSON.stringify(data.filter(item => item.id !== id)))
+  return { data: null, error: null }
+}
 
 function loadTeams() {
   try { return JSON.parse(localStorage.getItem(TEAMS_KEY) || '[]') } catch { return [] }

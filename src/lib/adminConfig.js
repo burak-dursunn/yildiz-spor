@@ -40,6 +40,7 @@ export const ADMIN = _base
       ligMacEdit:        (id) => `${_base}/panel/lig/mac-gir/${id}`,
       ligTakimlar:       `${_base}/panel/lig/takimlar`,
       galeri:            `${_base}/panel/galeri`,
+      slider:            `${_base}/panel/slider`,
       ayarlar:           `${_base}/panel/ayarlar`,
     }
   : null

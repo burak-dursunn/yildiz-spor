@@ -12,9 +12,31 @@ import {
   mockUploadImage,
   mockAddGalleryImage,
   mockDeleteGalleryImage,
+  mockGetSliderImages,
+  mockAddSliderImage,
+  mockDeleteSliderImage,
 } from './mockStorage'
 
 const USE_MOCK = !isSupabaseConfigured()
+
+export async function getHomeSliderImages() {
+  if (USE_MOCK) return mockGetSliderImages()
+  return await supabase.from('home_slider_images').select('*').order('order_index', { ascending: true })
+}
+
+export async function addHomeSliderImage(imageUrl) {
+  if (USE_MOCK) return mockAddSliderImage(imageUrl)
+  const { data: current, error: readError } = await getHomeSliderImages()
+  if (readError) return { data: null, error: readError }
+  const { data, error } = await supabase.from('home_slider_images')
+    .insert({ image_url: imageUrl, order_index: current?.length || 0 }).select().single()
+  return { data, error }
+}
+
+export async function removeHomeSliderImage(id) {
+  if (USE_MOCK) return mockDeleteSliderImage(id)
+  return await supabase.from('home_slider_images').delete().eq('id', id)
+}
 
 if (USE_MOCK) {
   console.info('[EYS] Supabase bağlantısı yok — Local mock modu aktif. Veriler localStorage\'da saklanır.')
