@@ -23,10 +23,21 @@ const DEFAULT_SLIDES = [
 
 export default function HeroSlider({ slides = DEFAULT_SLIDES }) {
   const [current, setCurrent] = useState(0)
+  const [loadedThrough, setLoadedThrough] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [paused, setPaused] = useState(false)
   const intervalRef = useRef(null)
   const DURATION = 4000
+
+  // Görselleri tarayıcının lazy-loading eşiğine bırakmadan tek tek sıraya al.
+  // Bir görsel yüklenince sıradaki görselin src'si DOM'a eklenir.
+  useEffect(() => {
+    setLoadedThrough(0)
+  }, [slides])
+
+  const loadNext = (index) => {
+    setLoadedThrough((loaded) => Math.max(loaded, Math.min(index + 1, slides.length - 1)))
+  }
 
   const goTo = useCallback((index) => {
     if (isTransitioning) return
@@ -94,7 +105,15 @@ export default function HeroSlider({ slides = DEFAULT_SLIDES }) {
               className={getClassName(i)} 
               onClick={() => goTo(i)}
             >
-              <img src={s.image} alt={s.title} loading={i === 0 ? 'eager' : 'lazy'} />
+              {i <= loadedThrough && (
+                <img
+                  src={s.image}
+                  alt={s.title || `Slider görseli ${i + 1}`}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  onLoad={() => loadNext(i)}
+                  onError={() => loadNext(i)}
+                />
+              )}
               <div className="cf-slide-overlay">
                 <h3 className="cf-slide-title">{s.title}</h3>
                 <p className="cf-slide-desc">{s.subtitle}</p>
